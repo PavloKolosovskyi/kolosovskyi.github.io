@@ -1,5 +1,66 @@
 <!doctype html>
-<meta charset="utf-8">
-<title>kolosovskyi</title>
-<h1>Привіт! Це тестова сторінка Павла Колосовського.</h1>
-<p>Ідемо повільно, крок за кроком.</p>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pavlo Kolosovskyi</title>
+  <meta name="description" content="Персональна сторінка. Повільно і акуратно будуємо сайт.">
+  <style>
+    /* Базовий, охайний стиль без «важких» рішень */
+    :root { --bg:#fafafa; --fg:#222; --muted:#555; --link:#0a7bd7; --card:#fff; --line:#e8e8e8; }
+    * { box-sizing:border-box }
+    html, body { height:100%; margin:0; }
+    body { background:var(--bg); color:var(--fg); font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+    .wrap { max-width: 860px; margin: 0 auto; padding: 20px; }
+    header { display:flex; align-items:center; justify-content:space-between; gap:16px; padding: 10px 0 6px; border-bottom:1px solid var(--line); }
+    .brand { font-weight:700; letter-spacing:.2px; }
+    nav a { color:var(--link); text-decoration:none; margin-left:14px; font-weight:600; }
+    nav a:hover { text-decoration:underline; }
+    main { padding: 18px 0 28px; }
+    section { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:18px; margin:14px 0; }
+    h1 { font-size:1.6rem; margin:0 0 6px; }
+    h2 { font-size:1.25rem; margin:.2rem 0 .6rem; }
+    p { margin:.4rem 0; color:var(--muted); }
+    footer { margin-top:20px; padding:14px 0; border-top:1px solid var(--line); color:var(--muted); font-size:.95rem; }
+    @media (max-width:640px){ nav a{ margin-left:10px } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">Pavlo Kolosovskyi</div>
+      <nav>
+        <a href="#intro">Головна</a>
+        <a href="#about">Про мене</a>
+        <a href="#contacts">Контакти</a>
+      </nav>
+    </header>
+
+    <main>
+      <section id="intro">
+        <h1>Спокійний старт сайту</h1>
+        <p>Поступово оформлюємо сторінку: без поспіху, крок за кроком. Зараз це мінімальний макет з простими секціями.</p>
+      </section>
+
+      <section id="about">
+        <h2>Про мене</h2>
+        <p>Короткий опис додамо пізніше. Поки що залишимо секцію порожньою, щоб бачити структуру.</p>
+      </section>
+
+      <section id="contacts">
+        <h2>Контакти</h2>
+        <p>Пошта: <a href="mailto:mail@kolosovskyi.de">mail@kolosovskyi.de</a></p>
+      </section>
+    </main>
+
+    <footer>
+      © <span id="y"></span> Pavlo Kolosovskyi
+    </footer>
+  </div>
+
+  <script>
+    // Лише рік у футері, без зайвого JS
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
