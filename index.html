@@ -1,40 +1,98 @@
 <!doctype html>
-<html lang="uk">
+<html lang="de">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Павло Колосовський — персональний сайт</title>
-  <meta name="description" content="Персональний сайт Павла Колосовського" />
+  <title>PAVLO KOLOSOVSKYI — Kompetenzprofil</title>
+  <meta name="description" content="Kompetenzprofil von Pavlo Kolosovskyi: Über mich, fachliche Kompetenzen und Ausbildung." />
   <style>
-    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 0; padding: 40px 20px; line-height: 1.6; }
-    .wrap { max-width: 880px; margin: 0 auto; }
-    h1 { margin: 0 0 12px; font-size: 28px; }
-    p { margin: 0 0 12px; }
-    .muted { color: #666; }
-    .card { border: 1px solid #e5e7eb; border-radius: 12px; padding: 16px 20px; margin: 16px 0; }
-    a { text-decoration: none; }
+    :root{
+      --bg:#ffffff;
+      --ink:#111;
+      --muted:#4b4b4b;
+      --bar:#5a5a5a;        /* верхня сіра полоса */
+      --line:#dcdcdc;       /* тонкі лінії/плашки */
+      --accent:#c73737;     /* маленький червоний акцент під «Kompetenzprofil» */
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font:15px/1.55 -apple-system,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial,sans-serif}
+    .wrap{max-width:820px;margin:0 auto;padding:0 16px 40px}
+    /* Header ribbon */
+    .ribbon{background:var(--bar);color:#fff;padding:22px 16px 26px}
+    .name{font-weight:800;letter-spacing:.04em;font-size:36px;line-height:1;margin:0;text-transform:uppercase}
+    .sub{margin:10px 0 0;display:inline-block;color:#eaeaea;position:relative}
+    .sub::after{content:"";display:block;height:2px;background:var(--accent);width:140px;margin-top:4px}
+    /* Section titles with light caps bar */
+    .sec{margin:28px 0 22px;text-align:center}
+    .sec span{display:inline-block;background:#f3f3f3;border:1px solid var(--line);padding:6px 12px;border-radius:3px;font-weight:800;letter-spacing:.02em}
+    .block{margin:0 0 22px}
+    .list{margin:0 0 0 18px}
+    .list li{margin:0 0 6px}
+    .footnote{margin-top:34px;text-align:center;color:var(--muted);font-style:italic}
+    /* друк/мобільні дрібниці */
+    @media (max-width:520px){
+      .name{font-size:30px}
+    }
+    @media print{
+      .wrap{max-width:100%;padding:0 12mm}
+      .ribbon{background:#444;color:#fff}
+      a{text-decoration:none;color:inherit}
+    }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <h1>Павло Колосовський — персональний сайт</h1>
-    <p class="muted">Ласкаво просимо! Тут я збиратиму свої проєкти, ідеї та контакти.</p>
-
-    <div class="card">
-      <h2 style="margin:0 0 8px;">Про мене</h2>
-      <p>Підприємець, консультант, створюю контент і цифрові продукти.</p>
+  <div class="ribbon">
+    <div class="wrap">
+      <h1 class="name">PAVLO KOLOSOVSKYI</h1>
+      <div class="sub">Kompetenzprofil</div>
     </div>
-
-    <div class="card">
-      <h2 style="margin:0 0 8px;">Швидкі посилання</h2>
-      <ul style="margin:0 0 0 18px;">
-        <li>Email: <a href="mailto:pavlo@kolosovskyi.de">pavlo@kolosovskyi.de</a></li>
-        <li>GitHub: <a href="https://github.com/pavlokolosovskyi">github.com/pavlokolosovskyi</a></li>
-      </ul>
-    </div>
-
-    <p class="muted">© <span id="y"></span> Павло Колосовський</p>
   </div>
-  <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+
+  <main class="wrap">
+    <!-- Über mich -->
+    <div class="sec"><span>ÜBER MICH</span></div>
+    <div class="block">
+      Breit aufgestellt im technischen Bereich mit reichlich Erfahrung im Bereich Immobilien,
+      Facility-Management und Konstruktion. Eine selbstständige, strukturierte und
+      verantwortungsvolle Arbeitsweise kann man bei mir voraussetzen.
+      Routiniert im Umgang mit IT und KI. Verlässlicher Teamplayer mit einem hohen
+      Qualitätsbewusstsein und einem klaren Fokus auf termingerechte Umsetzung und
+      praxisgerechte Lösungen.
+    </div>
+
+    <!-- Fachliche Kompetenzen -->
+    <div class="sec"><span>FACHLICHE KOMPETENZEN</span></div>
+    <ul class="list">
+      <li>Property Management / Teamleitung</li>
+      <li>Projektmanagement im Bereich Immobilienverwaltung</li>
+      <li>Transportkoordination</li>
+      <li>Budgetplanung</li>
+      <li>Controlling, Einkauf, Kostenreduktion</li>
+      <li>Projektkoordination im Bereich Bau und Renovierung</li>
+      <li>Planung und Umsetzung zahlreicher Bau- und Renovierungsprojekte,
+          von der Konzeptentwicklung über die Materialbeschaffung bis zur termingerechten Fertigstellung</li>
+      <li>Ingenieurwesen, Überwachung und technische Betreuung von Bauprojekten</li>
+      <li>Qualitätssicherung</li>
+      <li>Vermessung und Analyse von Braugrundstücken; geodätische Arbeiten</li>
+      <li>Zusammenarbeit mit Architekten, Bauleitern und externen Dienstleistern zur Sicherstellung
+          eines reibungslosen Bauablaufs und zur Einhaltung aller technischen Spezifikationen</li>
+    </ul>
+
+    <!-- Ausbildung -->
+    <div class="sec"><span>AUSBILDUNG</span></div>
+    <div class="block">
+      <strong>Master für Betriebswirtschaft</strong> — 09.2002 – 07.2003<br/>
+      Institut für Wirtschaft und Recht „KROK“, Kiew<br/>
+      <small>(ZAB-Zeugnisbewertung 2024: entspricht Teilen eines Bachelorstudiums BWL in Deutschland)</small>
+    </div>
+    <div class="block">
+      <strong>Diplomabschluss in Ingenieurwissenschaften</strong> — 09.1993 – 06.1998<br/>
+      Fachhochschule für Industrie und Wirtschaft, Kiew
+    </div>
+
+    <div class="footnote">
+      Langenfeld, 16.10.2025
+    </div>
+  </main>
 </body>
 </html>
