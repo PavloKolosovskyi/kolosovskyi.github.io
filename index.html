@@ -10,33 +10,30 @@
       --bg:#ffffff;
       --ink:#111;
       --muted:#4b4b4b;
-      --bar:#5a5a5a;        /* верхня сіра полоса */
-      --line:#dcdcdc;       /* тонкі лінії/плашки */
-      --accent:#c73737;     /* маленький червоний акцент під «Kompetenzprofil» */
+      --bar:#5a5a5a;
+      --line:#dcdcdc;
+      --accent:#c73737;
     }
     *{box-sizing:border-box}
-    html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font:15px/1.55 -apple-system,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial,sans-serif}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
+      font:15px/1.55 -apple-system,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial,sans-serif}
     .wrap{max-width:820px;margin:0 auto;padding:0 16px 40px}
-    /* Header ribbon */
     .ribbon{background:var(--bar);color:#fff;padding:22px 16px 26px}
     .name{font-weight:800;letter-spacing:.04em;font-size:36px;line-height:1;margin:0;text-transform:uppercase}
     .sub{margin:10px 0 0;display:inline-block;color:#eaeaea;position:relative}
     .sub::after{content:"";display:block;height:2px;background:var(--accent);width:140px;margin-top:4px}
-    /* Section titles with light caps bar */
     .sec{margin:28px 0 22px;text-align:center}
-    .sec span{display:inline-block;background:#f3f3f3;border:1px solid var(--line);padding:6px 12px;border-radius:3px;font-weight:800;letter-spacing:.02em}
+    .sec span{display:inline-block;background:#f3f3f3;border:1px solid var(--line);
+      padding:6px 12px;border-radius:3px;font-weight:800;letter-spacing:.02em}
     .block{margin:0 0 22px}
     .list{margin:0 0 0 18px}
     .list li{margin:0 0 6px}
     .footnote{margin-top:34px;text-align:center;color:var(--muted);font-style:italic}
-    /* друк/мобільні дрібниці */
+    .email{margin-top:8px;text-align:center;color:#0b5f5d;font-weight:600}
+    .email a{color:#0b5f5d;text-decoration:none}
+    .email a:hover{text-decoration:underline}
     @media (max-width:520px){
       .name{font-size:30px}
-    }
-    @media print{
-      .wrap{max-width:100%;padding:0 12mm}
-      .ribbon{background:#444;color:#fff}
-      a{text-decoration:none;color:inherit}
     }
   </style>
 </head>
@@ -49,7 +46,6 @@
   </div>
 
   <main class="wrap">
-    <!-- Über mich -->
     <div class="sec"><span>ÜBER MICH</span></div>
     <div class="block">
       Breit aufgestellt im technischen Bereich mit reichlich Erfahrung im Bereich Immobilien,
@@ -60,7 +56,6 @@
       praxisgerechte Lösungen.
     </div>
 
-    <!-- Fachliche Kompetenzen -->
     <div class="sec"><span>FACHLICHE KOMPETENZEN</span></div>
     <ul class="list">
       <li>Property Management / Teamleitung</li>
@@ -78,7 +73,6 @@
           eines reibungslosen Bauablaufs und zur Einhaltung aller technischen Spezifikationen</li>
     </ul>
 
-    <!-- Ausbildung -->
     <div class="sec"><span>AUSBILDUNG</span></div>
     <div class="block">
       <strong>Master für Betriebswirtschaft</strong> — 09.2002 – 07.2003<br/>
@@ -92,6 +86,9 @@
 
     <div class="footnote">
       Langenfeld, 16.10.2025
+    </div>
+    <div class="email">
+      E-Mail: <a href="mailto:pavlo@kolosovskyi.de">pavlo@kolosovskyi.de</a>
     </div>
   </main>
 </body>
