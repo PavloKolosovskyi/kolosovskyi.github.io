@@ -86,12 +86,22 @@
     </div>
 
     <div class="footnote">
-      Langenfeld, 16.10.2025
-    </div>
-    <div class="email">
-  E-Mail: <a href="mailto:pavlo@kolosovskyi.de">pavlo@kolosovskyi.de</a><br>
-  Telefon: <a href="tel:+491604515666" aria-label="Telefonnummer 0 1 6 0 4 5 1 5 6 6 6">0160&nbsp;4515&nbsp;666</a>
+  Langenfeld, <span id="current-date"></span>
 </div>
+<div class="email">
+  E-Mail: <a href="mailto:pavlo@kolosovskyi.de">pavlo@kolosovskyi.de</a>
+</div>
+
+<script>
+  // Вставляє поточну дату у форматі "dd.mm.yyyy"
+  const date = new Date();
+  const formatted = date.toLocaleDateString('de-DE', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric'
+  });
+  document.getElementById('current-date').textContent = formatted;
+</script>
   </main>
 </body>
 </html>
