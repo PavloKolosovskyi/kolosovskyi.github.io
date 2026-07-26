@@ -767,7 +767,7 @@ h1 em {
 }
 
 .hero-desktop-portrait::after {
-  background: linear-gradient(90deg, var(--navy-deep) 0%, rgba(6, 25, 45, 0.35) 18%, transparent 45%);
+  background: linear-gradient(90deg, var(--navy-deep) 0%, var(--navy-deep) 58%, rgba(6, 25, 45, 0.76) 64%, transparent 72%);
   content: "";
   inset: 0;
   position: absolute;
@@ -775,11 +775,11 @@ h1 em {
 
 .hero-desktop-portrait img {
   height: 100%;
-  margin-left: -52%;
+  margin-left: 0;
   max-width: none;
   object-fit: cover;
-  object-position: 72% center;
-  width: 180%;
+  object-position: center;
+  width: 96%;
 }
 
 .hero::before {
@@ -889,6 +889,10 @@ h1 em {
     height: calc(100vh - 86px);
   }
 
+  .hero-desktop-portrait {
+    margin-right: clamp(28px, 3vw, 72px);
+  }
+
   .brand {
     font-size: 16px;
   }
@@ -907,6 +911,14 @@ h1 em {
   .button {
     font-size: 15px;
     padding: 14px 20px;
+  }
+
+  .hero-kicker {
+    font-size: 14px;
+  }
+
+  .hero-summary {
+    font-size: clamp(18px, 1.2vw, 23px);
   }
 
   .expertise-card p,
@@ -934,7 +946,7 @@ h1 em {
   }
 
   .hero-desktop-copy h1 {
-    font-size: clamp(58px, 5vw, 96px);
+    font-size: clamp(70px, 5.7vw, 112px);
     line-height: 0.84;
   }
 
@@ -944,7 +956,7 @@ h1 em {
   }
 
   .hero-disciplines {
-    font-size: clamp(17px, 1.2vw, 22px);
+    font-size: clamp(19px, 1.35vw, 25px);
   }
 
   .hero-summary {
@@ -957,6 +969,21 @@ h1 em {
 
   .scroll-cue {
     bottom: 20px;
+  }
+}
+
+@media (min-width: 1800px) {
+  .brand {
+    font-size: 18px;
+  }
+
+  nav {
+    font-size: 17px;
+  }
+
+  .button {
+    font-size: 16px;
+    padding: 16px 23px;
   }
 }
 
