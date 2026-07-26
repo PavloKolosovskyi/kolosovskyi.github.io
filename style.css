@@ -681,6 +681,107 @@ h1 em {
   position: relative;
 }
 
+.hero-desktop-layout {
+  display: grid;
+  grid-template-columns: minmax(620px, 1.08fr) minmax(480px, 0.92fr);
+  height: calc(100vh - 75px);
+  margin: 0 auto;
+  max-width: 2400px;
+  min-height: 430px;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-desktop-copy {
+  align-self: center;
+  padding: clamp(54px, 6vh, 96px) clamp(48px, 6vw, 132px);
+}
+
+.hero-kicker {
+  color: var(--gold);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  margin: 0 0 28px;
+  text-transform: uppercase;
+}
+
+.hero-desktop-copy h1 {
+  color: var(--gold-soft);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(74px, 6.2vw, 132px);
+  font-weight: 400;
+  letter-spacing: -0.045em;
+  line-height: 0.88;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.hero-desktop-copy h1 span {
+  display: block;
+}
+
+.hero-rule {
+  background: rgba(220, 174, 82, 0.3);
+  height: 1px;
+  margin: clamp(30px, 5vh, 56px) 0 30px;
+  max-width: 780px;
+  position: relative;
+}
+
+.hero-rule span {
+  background: var(--gold);
+  height: 13px;
+  left: 52%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  width: 13px;
+}
+
+.hero-disciplines {
+  color: white;
+  font-size: clamp(19px, 1.5vw, 28px);
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.hero-summary {
+  color: #aebdca;
+  font-size: clamp(17px, 1.1vw, 21px);
+  margin: 18px 0 0;
+  max-width: 680px;
+}
+
+.hero-actions-inline {
+  margin-top: clamp(28px, 5vh, 48px);
+}
+
+.hero-desktop-portrait {
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.hero-desktop-portrait::after {
+  background: linear-gradient(90deg, var(--navy-deep) 0%, rgba(6, 25, 45, 0.35) 18%, transparent 45%);
+  content: "";
+  inset: 0;
+  position: absolute;
+}
+
+.hero-desktop-portrait img {
+  height: 100%;
+  margin-left: -52%;
+  max-width: none;
+  object-fit: cover;
+  object-position: 72% center;
+  width: 180%;
+}
+
 .hero::before {
   background:
     linear-gradient(180deg, transparent 58%, rgba(6, 25, 45, 0.84) 100%),
@@ -690,7 +791,7 @@ h1 em {
 }
 
 .hero-poster {
-  display: block;
+  display: none;
   height: calc(100vh - 75px);
   object-fit: cover;
   object-position: center center;
@@ -699,6 +800,7 @@ h1 em {
 
 .hero-actions-overlay {
   bottom: 42px;
+  display: none;
   left: clamp(24px, 7vw, 110px);
   position: absolute;
   z-index: 3;
@@ -742,12 +844,17 @@ h1 em {
 }
 
 @media (max-width: 900px) {
+  .hero-desktop-layout {
+    display: none;
+  }
+
   .hero {
     min-height: auto;
     padding: 0;
   }
 
   .hero-poster {
+    display: block;
     height: auto;
     min-height: 0;
     object-fit: contain;
@@ -757,6 +864,7 @@ h1 em {
   .hero-actions-overlay {
     background: var(--navy-deep);
     bottom: auto;
+    display: flex;
     left: auto;
     padding: 24px clamp(20px, 6vw, 42px) 34px;
     position: relative;
@@ -764,6 +872,91 @@ h1 em {
 
   .scroll-cue {
     display: none;
+  }
+}
+
+@media (min-width: 1400px) {
+  body {
+    font-size: 18px;
+  }
+
+  .site-header {
+    padding-bottom: 20px;
+    padding-top: 20px;
+  }
+
+  .hero-desktop-layout {
+    height: calc(100vh - 86px);
+  }
+
+  .brand {
+    font-size: 16px;
+  }
+
+  .brand-mark {
+    font-size: 15px;
+    height: 42px;
+    width: 42px;
+  }
+
+  nav {
+    font-size: 15px;
+    gap: 36px;
+  }
+
+  .button {
+    font-size: 15px;
+    padding: 14px 20px;
+  }
+
+  .expertise-card p,
+  .timeline-item p,
+  .experience-intro > p:last-child {
+    font-size: 18px;
+  }
+
+  .timeline-period,
+  .section-label,
+  .tools > p,
+  .contact footer {
+    font-size: 13px;
+  }
+}
+
+@media (min-width: 901px) and (max-height: 800px) {
+  .hero-desktop-copy {
+    padding-bottom: 30px;
+    padding-top: 30px;
+  }
+
+  .hero-kicker {
+    margin-bottom: 14px;
+  }
+
+  .hero-desktop-copy h1 {
+    font-size: clamp(58px, 5vw, 96px);
+    line-height: 0.84;
+  }
+
+  .hero-rule {
+    margin-bottom: 18px;
+    margin-top: 22px;
+  }
+
+  .hero-disciplines {
+    font-size: clamp(17px, 1.2vw, 22px);
+  }
+
+  .hero-summary {
+    display: none;
+  }
+
+  .hero-actions-inline {
+    margin-top: 20px;
+  }
+
+  .scroll-cue {
+    bottom: 20px;
   }
 }
 
