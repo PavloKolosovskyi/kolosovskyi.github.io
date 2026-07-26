@@ -1,40 +1,47 @@
 # kolosovskyi.github.io
 
-Offizielle Website von **Pavlo Kolosovskyi** zur beruflichen Vorstellung
-für eine Anstellung als **Hausmeister / Objektbetreuer** im Raum
-**Nordrhein-Westfalen (Köln – Düsseldorf)**.
+Offizielle Portfolio-Website von **Pavlo Kolosovskyi** aus Langenfeld.
 
-## Zweck der Website
-Diese Website dient als übersichtliche und sachliche Präsentation für:
-- Arbeitgeber,
-- Hausverwaltungen,
-- Facility-Management-Unternehmen,
-- Jobcenter,
-- Recruiter.
+Die Website präsentiert mein berufliches Profil für Positionen und Projekte in
+den Bereichen **Marketing, Content-Produktion, KI-gestützte Kommunikation und
+B2B**. Sie verbindet langjährige unternehmerische und technische Erfahrung mit
+modernen Werkzeugen für Text, Video, Bild, Musik und strukturierte digitale
+Workflows.
 
-Der Fokus liegt auf einer zuverlässigen Unterstützung im Bereich
-Hausmeisterservice und Objektbetreuung.
+## Berufliches Ziel
 
-## Tätigkeitsbereiche
-- Hausmeisterservice  
-- Objektbetreuung  
-- Winterdienst  
-- Kleine Reparaturen  
-- Instandhaltung und Ordnung  
-- Unterstützung im täglichen Objektbetrieb  
+Gesucht wird eine langfristige Position, in der strategisches Denken,
+pragmatische Umsetzung und moderne Content-Produktion zusammenkommen.
 
-## Einsatzgebiet
-- Köln  
-- Düsseldorf  
-- Leverkusen  
-- Langenfeld  
-- Hilden und Umgebung  
+## Schwerpunkte
+
+- KI-gestützte Content-Produktion
+- Marketing und B2B-Kommunikation
+- Kurzvideo, Storytelling, Foto und Präsentationen
+- Musik- und Audiokonzepte
+- Technische Produkte verständlich erklären
+- Projektkoordination und Prozessoptimierung
+- Immobilien- und Objektmanagement als ergänzender Erfahrungsbereich
+
+## Arbeitsweise
+
+- unternehmerisch und lösungsorientiert
+- strukturiert, zuverlässig und eigenverantwortlich
+- schnelle Umsetzung mit Qualitätskontrolle
+- technisches Verständnis kombiniert mit kreativer Perspektive
+
+## Datenschutz
+
+Die Website verwendet keine Cookies, keine Analyse- oder Trackingdienste und
+keine Kontaktformulare.
 
 ## Kontakt
-📧 **pavlo@kolosovskyi.de**  
-🌐 **https://kolosovskyi.de**
 
----
+**Pavlo Kolosovskyi**  
+Langenfeld, Nordrhein-Westfalen  
+E-Mail: **pavlo@kolosovskyi.de**  
+Website: **https://kolosovskyi.de/**
 
-Technische Umsetzung:  
-Statische Website (HTML), bereitgestellt über GitHub Pages.
+## Technische Umsetzung
+
+Statische, responsive Website mit HTML und CSS, veröffentlicht über GitHub Pages.
