@@ -1,0 +1,1300 @@
+/* ==========================================================================
+   Pavlo Kolosovskyi - Portfolio
+   Eine gemeinsame Stylesheet-Datei fuer alle drei Sprachfassungen.
+   Reihenfolge: Tokens - Basis - Kopf - Hero - Sektionen - Fuss - Responsive
+   ========================================================================== */
+
+:root {
+  --navy: #0d2845;
+  --navy-deep: #06192d;
+  --hero-bg: #03132a;      /* trifft die Bildkante des Portraets */
+  --gold: #dcae52;         /* Akzent auf dunklem Grund */
+  --gold-ink: #856419;     /* Goldton fuer Text auf hellem Grund, erfuellt WCAG AA */
+  --gold-soft: #f3d99d;
+  --cream: #f5f1e8;
+  --paper: #fbfaf7;
+  --shell: #f0ece3;
+  --ink: #14263a;
+  --muted: #667586;
+  --header-h: 75px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.55;
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+}
+
+h1,
+h2 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 400;
+  line-height: 0.98;
+}
+
+/* --------------------------------------------------------------------------
+   Skip-Link
+   -------------------------------------------------------------------------- */
+
+.skip-link {
+  background: var(--gold);
+  color: var(--navy-deep);
+  font-size: 13px;
+  font-weight: 800;
+  left: 12px;
+  padding: 12px 18px;
+  position: fixed;
+  text-transform: uppercase;
+  top: -100px;
+  transition: top 150ms ease;
+  z-index: 60;
+}
+
+.skip-link:focus {
+  top: 12px;
+}
+
+/* --------------------------------------------------------------------------
+   Kopfzeile, Navigation, Sprachwahl
+   -------------------------------------------------------------------------- */
+
+.site-header {
+  align-items: center;
+  background: rgba(6, 25, 45, 0.96);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(220, 174, 82, 0.24);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  left: 0;
+  padding: 18px clamp(24px, 6vw, 96px);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.brand {
+  align-items: center;
+  display: flex;
+  font-size: 14px;
+  font-weight: 700;
+  gap: 12px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.brand-mark {
+  align-items: center;
+  background: var(--gold);
+  color: var(--navy-deep);
+  display: flex;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 13px;
+  height: 38px;
+  justify-content: center;
+  letter-spacing: 0;
+  width: 38px;
+}
+
+nav {
+  align-items: center;
+  display: flex;
+  font-size: 13px;
+  font-weight: 700;
+  gap: 28px;
+}
+
+nav a:not(.nav-cta):not(.lang-switch a) {
+  position: relative;
+}
+
+nav > a:not(.nav-cta)::after {
+  background: var(--gold);
+  bottom: -6px;
+  content: "";
+  height: 2px;
+  left: 0;
+  position: absolute;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 180ms ease;
+  width: 100%;
+}
+
+nav > a:hover::after,
+nav > a:focus-visible::after {
+  transform: scaleX(1);
+}
+
+.nav-cta {
+  border: 1px solid rgba(243, 217, 157, 0.62);
+  color: var(--gold-soft);
+  padding: 10px 16px;
+}
+
+.lang-switch {
+  align-items: center;
+  border-left: 1px solid rgba(243, 217, 157, 0.28);
+  display: flex;
+  gap: 4px;
+  padding-left: 22px;
+}
+
+.lang-switch a {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  padding: 6px 8px;
+  text-transform: uppercase;
+}
+
+.lang-switch a:hover,
+.lang-switch a:focus-visible {
+  color: var(--gold-soft);
+}
+
+.lang-switch a[aria-current="true"] {
+  background: rgba(220, 174, 82, 0.16);
+  color: var(--gold);
+}
+
+/* Burger: die Sichtbarkeit steuert reines CSS, das Skript schliesst nur nach der Auswahl */
+
+.nav-toggle {
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  width: 1px;
+}
+
+.nav-burger {
+  align-items: center;
+  cursor: pointer;
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  height: 42px;
+  justify-content: center;
+  width: 42px;
+}
+
+.nav-burger span {
+  background: var(--gold-soft);
+  height: 2px;
+  transition: transform 180ms ease, opacity 180ms ease;
+  width: 22px;
+}
+
+.nav-burger em {
+  border: 0;
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+.nav-toggle:focus-visible + .nav-burger {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+.nav-toggle:checked + .nav-burger span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.nav-toggle:checked + .nav-burger span:nth-child(2) {
+  opacity: 0;
+}
+
+.nav-toggle:checked + .nav-burger span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* --------------------------------------------------------------------------
+   Buttons
+   -------------------------------------------------------------------------- */
+
+.button {
+  display: inline-flex;
+  font-size: 13px;
+  font-weight: 800;
+  justify-content: center;
+  letter-spacing: 0.05em;
+  padding: 15px 22px;
+  text-transform: uppercase;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.button:hover,
+.button:focus-visible {
+  transform: translateY(-2px);
+}
+
+.button-gold {
+  background: var(--gold);
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.25);
+  color: var(--navy-deep);
+}
+
+.button-outline-light {
+  border: 1px solid rgba(255, 255, 255, 0.52);
+  color: white;
+}
+
+.button-outline-dark {
+  border: 1px solid rgba(13, 40, 69, 0.35);
+  color: var(--navy);
+}
+
+/* --------------------------------------------------------------------------
+   Hero
+   -------------------------------------------------------------------------- */
+
+.hero {
+  background: var(--hero-bg);
+  min-height: calc(100vh - var(--header-h));
+  overflow: hidden;
+  position: relative;
+}
+
+.hero::before {
+  background:
+    linear-gradient(180deg, transparent 58%, rgba(6, 25, 45, 0.84) 100%),
+    linear-gradient(90deg, rgba(6, 25, 45, 0.14), transparent 48%);
+  content: "";
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+  z-index: 1;
+}
+
+.hero-layout {
+  display: grid;
+  /* Die Mindestbreiten muessen zusammen unter 901px bleiben - ab dort greift
+     dieses Raster. Sonst schneidet overflow:hidden die rechte Spalte ab. */
+  grid-template-columns: minmax(480px, 1.08fr) minmax(360px, 0.92fr);
+  height: calc(100vh - var(--header-h));
+  margin: 0 auto;
+  max-width: 2400px;
+  min-height: 430px;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-copy {
+  align-self: center;
+  padding: clamp(54px, 6vh, 96px) clamp(48px, 6vw, 132px);
+}
+
+.hero-kicker {
+  color: var(--gold);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  margin: 0 0 28px;
+  text-transform: uppercase;
+}
+
+.hero-copy h1 {
+  color: var(--gold-soft);
+  font-size: clamp(52px, 6.2vw, 132px);
+  letter-spacing: -0.045em;
+  line-height: 0.88;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.hero-copy h1 span {
+  display: block;
+}
+
+.hero-rule {
+  background: rgba(220, 174, 82, 0.3);
+  height: 1px;
+  margin: clamp(30px, 5vh, 56px) 0 30px;
+  max-width: 780px;
+  position: relative;
+}
+
+.hero-rule span {
+  background: var(--gold);
+  height: 13px;
+  left: 52%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  width: 13px;
+}
+
+.hero-disciplines {
+  color: white;
+  font-size: clamp(15px, 1.5vw, 28px);
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.hero-summary {
+  color: #aebdca;
+  font-size: clamp(17px, 1.1vw, 21px);
+  margin: 18px 0 0;
+  max-width: 680px;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: clamp(28px, 5vh, 48px);
+}
+
+/* Portraet als Hintergrundbild: pro Bildschirmgroesse laedt genau eine Datei */
+.hero-portrait {
+  background-image: url("hero-desktop.jpg");
+  background-position: right center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 100%;
+  min-height: 0;
+}
+
+.scroll-cue {
+  align-items: center;
+  bottom: 38px;
+  color: var(--gold-soft);
+  display: flex;
+  font-size: 10px;
+  font-weight: 800;
+  gap: 12px;
+  letter-spacing: 0.16em;
+  position: absolute;
+  right: clamp(24px, 6vw, 96px);
+  text-transform: uppercase;
+  z-index: 3;
+}
+
+.scroll-cue b {
+  align-items: center;
+  border: 1px solid rgba(243, 217, 157, 0.5);
+  border-radius: 50%;
+  display: flex;
+  font-size: 15px;
+  height: 38px;
+  justify-content: center;
+  width: 38px;
+}
+
+/* --------------------------------------------------------------------------
+   Stellensuche: die wichtigste Information direkt unter dem Hero.
+   Wer aus einer Bewerbung hierher klickt, soll in fuenf Sekunden wissen,
+   was gesucht wird - ohne zu scrollen.
+   -------------------------------------------------------------------------- */
+
+.seeking {
+  background: var(--shell);
+  border-bottom: 1px solid rgba(13, 40, 69, 0.1);
+  padding: 44px clamp(24px, 8vw, 132px) 48px;
+}
+
+.seeking-status {
+  align-items: center;
+  color: var(--navy);
+  display: flex;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(21px, 2vw, 30px);
+  gap: 14px;
+  margin: 0 0 30px;
+}
+
+.status-dot {
+  background: #3f8a5c;
+  border-radius: 50%;
+  box-shadow: 0 0 0 5px rgba(63, 138, 92, 0.16);
+  flex: none;
+  height: 9px;
+  width: 9px;
+}
+
+.seeking-grid {
+  display: grid;
+  gap: 22px 28px;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  margin: 0;
+}
+
+.seeking-item {
+  border-left: 2px solid var(--gold);
+  padding-left: 15px;
+}
+
+.seeking-item dt {
+  color: var(--gold-ink);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+}
+
+.seeking-item dd {
+  color: var(--navy);
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Gemeinsame Sektionsbausteine
+   -------------------------------------------------------------------------- */
+
+.section-label {
+  align-items: center;
+  color: var(--gold-ink);
+  display: flex;
+  font-size: 12px;
+  font-weight: 800;
+  gap: 10px;
+  letter-spacing: 0.16em;
+  margin: 0 0 26px;
+  text-transform: uppercase;
+}
+
+.section-label.light {
+  color: var(--gold-soft);
+}
+
+.intro,
+.expertise-section,
+.experience-section,
+.projects-section,
+.news-section,
+.tools {
+  padding: 110px clamp(24px, 8vw, 132px);
+}
+
+.intro h2,
+.section-heading h2,
+.experience-intro h2,
+.projects-section > .section-heading h2,
+.contact h2 {
+  font-size: clamp(46px, 6vw, 86px);
+  letter-spacing: -0.04em;
+  margin: 0 0 34px;
+}
+
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 54px;
+}
+
+.section-heading h2 {
+  color: var(--navy);
+  margin: 0;
+}
+
+/* --- 01 Profil --- */
+
+.intro {
+  background: var(--navy);
+  color: white;
+  display: grid;
+  gap: 8vw;
+  grid-template-columns: 0.35fr 1fr;
+}
+
+.intro .section-label {
+  color: var(--gold-soft);
+}
+
+.intro p:not(.section-label) {
+  color: #c5d0dc;
+  font-size: clamp(17px, 1.5vw, 22px);
+  max-width: 860px;
+}
+
+/* --- 02 Kompetenzen --- */
+
+.expertise-section {
+  background: var(--cream);
+}
+
+.expertise-grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.expertise-card {
+  background: var(--paper);
+  border-top: 3px solid var(--gold);
+  min-height: 310px;
+  padding: 36px;
+  position: relative;
+  transition: transform 220ms ease, box-shadow 220ms ease;
+}
+
+.expertise-card:hover {
+  box-shadow: 0 18px 50px rgba(13, 40, 69, 0.1);
+  transform: translateY(-6px);
+}
+
+.card-number {
+  color: var(--gold-ink);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+}
+
+.expertise-card h3,
+.timeline-item h3 {
+  color: var(--navy);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 28px;
+  font-weight: 400;
+  margin: 60px 0 14px;
+}
+
+.expertise-card p,
+.timeline-item p,
+.experience-intro > p:last-child {
+  color: var(--muted);
+}
+
+.card-arrow {
+  bottom: 30px;
+  color: var(--gold-ink);
+  font-size: 24px;
+  position: absolute;
+  right: 34px;
+}
+
+/* --- 03 Erfahrung --- */
+
+.experience-section {
+  display: grid;
+  gap: 8vw;
+  grid-template-columns: 0.75fr 1.25fr;
+}
+
+.experience-intro {
+  align-self: start;
+  position: sticky;
+  top: 130px;
+}
+
+.experience-intro h2 {
+  color: var(--navy);
+}
+
+.timeline {
+  border-top: 1px solid rgba(13, 40, 69, 0.18);
+}
+
+.timeline-item {
+  border-bottom: 1px solid rgba(13, 40, 69, 0.18);
+  display: grid;
+  gap: 30px;
+  grid-template-columns: 125px 1fr;
+  padding: 34px 0;
+}
+
+.timeline-period {
+  color: var(--gold-ink);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.timeline-item h3 {
+  font-size: 25px;
+  margin: 0 0 10px;
+}
+
+.timeline-item p {
+  margin: 0;
+}
+
+/* --- 04 Projekte: Videokarten mit Klick-zum-Laden --- */
+
+.projects-section {
+  background: var(--navy);
+  color: white;
+}
+
+.projects-section .section-label {
+  color: var(--gold-soft);
+}
+
+.projects-section .section-heading h2 {
+  color: white;
+}
+
+.project-lead {
+  color: #c5d0dc;
+  font-size: clamp(17px, 1.3vw, 20px);
+  margin: 0 0 46px;
+  max-width: 760px;
+}
+
+.video-grid {
+  display: grid;
+  gap: 22px;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.video-card {
+  background: var(--navy-deep);
+  border: 1px solid rgba(220, 174, 82, 0.22);
+  display: flex;
+  flex-direction: column;
+}
+
+.video-frame {
+  aspect-ratio: 16 / 9;
+  background: var(--navy-deep);
+  border: 0;
+  cursor: pointer;
+  display: block;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+  position: relative;
+  width: 100%;
+}
+
+.video-frame img {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 260ms ease, opacity 260ms ease;
+  width: 100%;
+}
+
+.video-frame:hover img,
+.video-frame:focus-visible img {
+  opacity: 0.82;
+  transform: scale(1.03);
+}
+
+.video-frame:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+.play-badge {
+  align-items: center;
+  background: rgba(6, 25, 45, 0.72);
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  color: var(--gold);
+  display: flex;
+  font-size: 22px;
+  height: 62px;
+  justify-content: center;
+  left: 50%;
+  padding-left: 5px;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  transition: background 200ms ease;
+  width: 62px;
+}
+
+.video-frame:hover .play-badge {
+  background: rgba(220, 174, 82, 0.92);
+  color: var(--navy-deep);
+}
+
+.video-frame iframe {
+  border: 0;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.video-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 22px 24px 26px;
+}
+
+.video-date {
+  color: var(--gold);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  margin: 0 0 10px;
+  text-transform: uppercase;
+}
+
+.video-body h3 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.25;
+  margin: 0 0 12px;
+}
+
+.video-body p {
+  color: #aebdca;
+  font-size: 15px;
+  margin: 0;
+}
+
+.video-note {
+  border-left: 2px solid rgba(220, 174, 82, 0.5);
+  color: #93a7bb;
+  font-size: 13px;
+  margin: 34px 0 0;
+  max-width: 720px;
+  padding-left: 16px;
+}
+
+.channel-action {
+  margin-top: 34px;
+}
+
+/* --- 05 Aktuelles --- */
+
+.news-section {
+  background: var(--cream);
+}
+
+.news-list {
+  border-top: 1px solid rgba(13, 40, 69, 0.18);
+}
+
+.news-item {
+  border-bottom: 1px solid rgba(13, 40, 69, 0.18);
+  display: grid;
+  gap: 30px;
+  grid-template-columns: 125px 1fr;
+  padding: 30px 0;
+}
+
+.news-date {
+  color: var(--gold-ink);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.news-item h3 {
+  color: var(--navy);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 24px;
+  font-weight: 400;
+  margin: 0 0 10px;
+}
+
+.news-item p {
+  color: var(--muted);
+  margin: 0;
+  max-width: 760px;
+}
+
+/* --- Werkzeugleiste --- */
+
+.tools {
+  background: var(--gold);
+  color: var(--navy-deep);
+  overflow: hidden;
+  padding-bottom: 70px;
+  padding-top: 70px;
+}
+
+.tools > p {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.tool-row {
+  display: flex;
+  flex-wrap: wrap;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(27px, 4vw, 55px);
+  gap: 12px 38px;
+}
+
+.tool-row span:not(:last-child)::after {
+  color: rgba(13, 40, 69, 0.55);
+  content: "·";
+  margin-left: 38px;
+}
+
+/* --------------------------------------------------------------------------
+   06 Kontakt und Fusszeile
+   -------------------------------------------------------------------------- */
+
+.contact {
+  background: var(--navy-deep);
+  color: white;
+  padding: 110px clamp(24px, 8vw, 132px) 90px;
+}
+
+.contact h2 {
+  max-width: 1100px;
+}
+
+.contact-copy {
+  color: #aebdca;
+  font-size: 18px;
+}
+
+.contact-link {
+  border-bottom: 1px solid rgba(243, 217, 157, 0.45);
+  color: var(--gold-soft);
+  display: flex;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(27px, 4vw, 52px);
+  justify-content: space-between;
+  margin-top: 60px;
+  padding-bottom: 18px;
+}
+
+.site-footer {
+  background: var(--navy-deep);
+  color: #93a7bb;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 12px;
+  gap: 16px;
+  justify-content: space-between;
+  padding: 0 clamp(24px, 8vw, 132px) 32px;
+}
+
+.site-footer div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.site-footer a:hover,
+.site-footer a:focus-visible {
+  color: var(--gold-soft);
+}
+
+/* --------------------------------------------------------------------------
+   Rechtliche Hinweise
+   -------------------------------------------------------------------------- */
+
+.legal-section {
+  background: var(--shell);
+  display: grid;
+  gap: clamp(36px, 7vw, 96px);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  padding: 90px clamp(24px, 8vw, 132px);
+}
+
+.legal-section article {
+  scroll-margin-top: 100px;
+}
+
+.legal-section h2 {
+  color: var(--navy);
+  font-size: clamp(30px, 3vw, 44px);
+  letter-spacing: -0.025em;
+  line-height: 1.08;
+  margin: 0 0 28px;
+}
+
+.legal-section h3 {
+  color: var(--navy);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1.2;
+  margin: 34px 0 14px;
+}
+
+.legal-section p {
+  color: #42566a;
+  max-width: 680px;
+}
+
+.legal-section ul {
+  color: #42566a;
+  padding-left: 22px;
+}
+
+.legal-section a {
+  border-bottom: 1px solid rgba(13, 40, 69, 0.3);
+}
+
+.legal-note {
+  border-left: 2px solid var(--gold-ink);
+  font-size: 13px;
+  margin-top: 26px;
+  padding-left: 18px;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .nav-burger {
+    display: flex;
+  }
+
+  nav {
+    background: var(--navy-deep);
+    border-bottom: 1px solid rgba(220, 174, 82, 0.24);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+    display: none;
+    flex-direction: column;
+    gap: 0;
+    left: 0;
+    padding: 8px 0 16px;
+    position: absolute;
+    right: 0;
+    top: 100%;
+  }
+
+  .nav-toggle:checked ~ nav {
+    display: flex;
+  }
+
+  nav > a {
+    font-size: 15px;
+    padding: 14px clamp(24px, 6vw, 96px);
+    width: 100%;
+  }
+
+  nav > a:not(.nav-cta)::after {
+    display: none;
+  }
+
+  /* Der Rahmen-Button wird im Klappmenue zu einem normalen Eintrag.
+     Die Innenabstaende muessen mitgesetzt werden, weil die Klasse
+     spezifischer ist als die Regel fuer "nav > a". */
+  .nav-cta {
+    border: 0;
+    color: var(--gold-soft);
+    padding: 14px clamp(24px, 6vw, 96px);
+  }
+
+  .lang-switch {
+    border-left: 0;
+    border-top: 1px solid rgba(243, 217, 157, 0.2);
+    gap: 6px;
+    margin-top: 8px;
+    padding: 14px clamp(24px, 6vw, 96px) 0;
+    width: 100%;
+  }
+
+  /* Mindestens 44px hoch, damit die Flaeche mit dem Finger sicher zu treffen ist. */
+  .lang-switch a {
+    font-size: 14px;
+    padding: 12px 14px;
+  }
+
+  /* Hero: echter Text statt Bild-Headline */
+  .hero {
+    min-height: 0;
+  }
+
+  .hero-layout {
+    grid-template-columns: 1fr;
+    height: auto;
+    min-height: 0;
+  }
+
+  .hero-copy {
+    padding: 54px clamp(20px, 6vw, 42px) 40px;
+  }
+
+  .hero-portrait {
+    aspect-ratio: 720 / 882;
+    background-image: url("hero-mobile.jpg");
+    background-position: center top;
+    background-size: cover;
+    height: auto;
+    position: relative;
+  }
+
+  .hero-portrait::after {
+    background: linear-gradient(180deg, var(--hero-bg) 0%, transparent 18%);
+    content: "";
+    inset: 0;
+    position: absolute;
+  }
+
+  .hero::before {
+    display: none;
+  }
+
+  .scroll-cue {
+    display: none;
+  }
+
+  .intro,
+  .experience-section {
+    grid-template-columns: 1fr;
+  }
+
+  .section-heading {
+    display: block;
+  }
+
+  .expertise-grid,
+  .video-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .experience-intro {
+    position: static;
+  }
+}
+
+@media (max-width: 560px) {
+  .site-header {
+    padding: 13px 18px;
+  }
+
+  .brand > span:last-child {
+    display: none;
+  }
+
+  nav > a,
+  .lang-switch {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .hero-copy {
+    padding: 42px 20px 36px;
+  }
+
+  /* "Kolosovskyi" ist das laengste Wort und darf nie abgeschnitten werden.
+     Bei 52px belegt es rund 6,5x seine Schriftgroesse; der Teiler 6,6 laesst
+     etwas Reserve zum 20px-Innenabstand auf beiden Seiten. */
+  .hero-copy h1 {
+    font-size: min(52px, calc((100vw - 46px) / 6.6));
+  }
+
+  .hero-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .seeking,
+  .intro,
+  .expertise-section,
+  .experience-section,
+  .projects-section,
+  .news-section,
+  .tools,
+  .contact,
+  .site-footer {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .intro,
+  .expertise-section,
+  .experience-section,
+  .projects-section,
+  .news-section {
+    padding-bottom: 76px;
+    padding-top: 76px;
+  }
+
+  .intro h2,
+  .section-heading h2,
+  .experience-intro h2,
+  .contact h2 {
+    font-size: 46px;
+  }
+
+  .timeline-item,
+  .news-item {
+    gap: 8px;
+    grid-template-columns: 1fr;
+  }
+
+  .contact-link {
+    font-size: 23px;
+  }
+
+  .site-footer {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .site-footer div {
+    flex-direction: column;
+    gap: 6px;
+  }
+}
+
+@media (max-width: 760px) {
+  .legal-section {
+    grid-template-columns: 1fr;
+    padding: 70px 20px;
+  }
+}
+
+@media (min-width: 901px) and (max-height: 800px) {
+  .hero-copy {
+    padding-bottom: 30px;
+    padding-top: 30px;
+  }
+
+  .hero-kicker {
+    margin-bottom: 14px;
+  }
+
+  /* Untergrenze bewusst niedrig: bei 901-1100px Breite passt "Kolosovskyi"
+     sonst nicht in die linke Spalte. */
+  .hero-copy h1 {
+    font-size: clamp(52px, 5.7vw, 112px);
+    line-height: 0.84;
+  }
+
+  .hero-rule {
+    margin-bottom: 18px;
+    margin-top: 22px;
+  }
+
+  .hero-disciplines {
+    font-size: clamp(19px, 1.35vw, 25px);
+  }
+
+  .hero-summary {
+    display: none;
+  }
+
+  .hero-actions {
+    margin-top: 20px;
+  }
+
+  .scroll-cue {
+    bottom: 20px;
+  }
+}
+
+@media (min-width: 1400px) {
+  :root {
+    --header-h: 86px;
+  }
+
+  body {
+    font-size: 18px;
+  }
+
+  .site-header {
+    padding-bottom: 20px;
+    padding-top: 20px;
+  }
+
+  .hero-portrait {
+    margin-right: clamp(28px, 3vw, 72px);
+  }
+
+  .brand {
+    font-size: 16px;
+  }
+
+  .brand-mark {
+    font-size: 15px;
+    height: 42px;
+    width: 42px;
+  }
+
+  nav {
+    font-size: 15px;
+    gap: 34px;
+  }
+
+  .button {
+    font-size: 15px;
+    padding: 14px 20px;
+  }
+
+  .hero-kicker {
+    font-size: 14px;
+  }
+
+  .hero-summary {
+    font-size: clamp(18px, 1.2vw, 23px);
+  }
+
+  .expertise-card p,
+  .timeline-item p,
+  .news-item p,
+  .experience-intro > p:last-child {
+    font-size: 18px;
+  }
+
+  .timeline-period,
+  .news-date,
+  .section-label,
+  .tools > p,
+  .site-footer {
+    font-size: 13px;
+  }
+}
+
+@media (min-width: 1800px) {
+  .brand {
+    font-size: 18px;
+  }
+
+  nav {
+    font-size: 17px;
+  }
+
+  .button {
+    font-size: 16px;
+    padding: 16px 23px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
