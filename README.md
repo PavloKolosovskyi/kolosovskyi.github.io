@@ -1,47 +1,57 @@
-# kolosovskyi.github.io
+# kolosovskyi.de — нова версія сайту
 
-Offizielle Portfolio-Website von **Pavlo Kolosovskyi** aus Langenfeld.
+Портфоліо Павла Колосовського. Статичний сайт: чистий HTML і CSS плюс один
+невеликий скрипт. Працює **офлайн** — достатньо відкрити `index.html`
+подвійним кліком, сервер не потрібен.
 
-Die Website präsentiert mein berufliches Profil für Positionen und Projekte in
-den Bereichen **Marketing, Content-Produktion, KI-gestützte Kommunikation und
-B2B**. Sie verbindet langjährige unternehmerische und technische Erfahrung mit
-modernen Werkzeugen für Text, Video, Bild, Musik und strukturierte digitale
-Workflows.
+## Структура
 
-## Berufliches Ziel
+```
+index.html          німецька (головна)
+en/index.html       англійська
+uk/index.html       українська
+assets/
+  style.css         усі стилі, спільні для трьох мов
+  site.js           меню + запуск відео по кліку
+  hero-desktop.jpg  портрет для екранів від 901px
+  hero-mobile.jpg   портрет для екранів до 900px
+  og.jpg            прев'ю для соцмереж (у розмітці, не на сторінці)
+  video-1..3.jpg    локальні прев'ю відео з YouTube
+  favicon.ico, apple-touch-icon.png
+  lebenslauf.pdf    резюме
+robots.txt
+sitemap.xml
+```
 
-Gesucht wird eine langfristige Position, in der strategisches Denken,
-pragmatische Umsetzung und moderne Content-Produktion zusammenkommen.
+## Як редагувати
 
-## Schwerpunkte
+**Тексти** — прямо в трьох файлах `index.html`. Кожна мова самодостатня:
+щоб змінити щось однією мовою, інші чіпати не треба.
 
-- KI-gestützte Content-Produktion
-- Marketing und B2B-Kommunikation
-- Kurzvideo, Storytelling, Foto und Präsentationen
-- Musik- und Audiokonzepte
-- Technische Produkte verständlich erklären
-- Projektkoordination und Prozessoptimierung
-- Immobilien- und Objektmanagement als ergänzender Erfahrungsbereich
+**Оформлення** — тільки `assets/style.css`. Файл спільний, тож правка
+застосується одразу до всіх трьох мов.
 
-## Arbeitsweise
+**Новий запис у новинах** — скопіювати блок `<article class="news-item">`
+у розділі `news-list` і замінити дату, заголовок і текст.
 
-- unternehmerisch und lösungsorientiert
-- strukturiert, zuverlässig und eigenverantwortlich
-- schnelle Umsetzung mit Qualitätskontrolle
-- technisches Verständnis kombiniert mit kreativer Perspektive
+**Нове відео** — скопіювати блок `<article class="video-card">`, підставити
+ID відео в `data-video` і покласти прев'ю в `assets/`.
 
-## Datenschutz
+## Три речі, про які варто пам'ятати
 
-Die Website verwendet keine Cookies, keine Analyse- oder Trackingdienste und
-keine Kontaktformulare.
+1. **Одна мова — одна адреса.** Перемикач у шапці веде на сусідній файл, а
+   теги `hreflang` кажуть Google, що це та сама сторінка різними мовами.
 
-## Kontakt
+2. **Відео не вантажаться самі.** На сторінці лежать локальні прев'ю. Запит
+   до Google йде лише після кліку, і саме тому Datenschutz описує це як згоду
+   за ст. 6 абз. 1 п. a GDPR. Якщо колись заміните це на звичайні `<iframe>`,
+   текст політики доведеться переписати.
 
-**Pavlo Kolosovskyi**  
-Langenfeld, Nordrhein-Westfalen  
-E-Mail: **pavlo@kolosovskyi.de**  
-Website: **https://kolosovskyi.de/**
+3. **Юридична сила — за німецьким текстом.** Англійська й українська версії
+   Impressum та політики конфіденційності є перекладами для зручності, про що
+   в них сказано прямо.
 
-## Technische Umsetzung
+## Публікація
 
-Statische, responsive Website mit HTML und CSS, veröffentlicht über GitHub Pages.
+Сайт розрахований на GitHub Pages. Для виходу онлайн потрібні лише файл
+`CNAME` із доменом і завантаження вмісту цієї папки в репозиторій.
