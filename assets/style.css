@@ -814,6 +814,39 @@ nav > a:focus-visible::after {
   max-width: 760px;
 }
 
+.project-figures {
+  border-top: 1px solid rgba(220, 174, 82, 0.22);
+  display: grid;
+  gap: 18px 26px;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  margin: 24px 0 26px;
+  padding-top: 22px;
+}
+
+.project-figures div { }
+
+.project-figures dt,
+.project-figures .fig-label {
+  color: #93a7bb;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.project-figures .fig-value {
+  color: var(--gold-soft);
+  font-size: clamp(19px, 1.5vw, 23px);
+  font-weight: 600;
+  line-height: 1.2;
+  margin-top: 3px;
+}
+
+.project-stack {
+  color: #93a7bb;
+  font-size: 13px;
+  margin: 0 0 24px;
+}
+
 .project-data ul {
   color: #93a7bb;
   font-size: 14px;
