@@ -259,6 +259,27 @@
         <p class="channel-action">
           <a class="button button-gold" href="https://www.youtube.com/channel/UC3sv8M5KpYVajxv3SF8W27A" target="_blank" rel="noopener">Open the channel on YouTube <span aria-hidden="true">↗</span></a>
         </p>
+      
+        <article class="project-data">
+          <p class="project-data-kicker">Data analysis</p>
+          <h3>Regional Seasonal Deviation Index</h3>
+          <p>Is unemployment in a district rising more than the season alone would explain? The Federal Employment Agency publishes seasonally adjusted figures for Germany and the federal states — a running monthly series for all districts is not part of that. This analysis closes the gap: own calculation based on the official interface, updated monthly, for all 53 districts in North Rhine-Westphalia.</p>
+          <div class="project-figures">
+            <div><p class="fig-label">Districts in NRW</p><p class="fig-value">53</p></div>
+            <div><p class="fig-label">Monthly values per district</p><p class="fig-value">235</p></div>
+            <div><p class="fig-label">Data points</p><p class="fig-value">~49,000</p></div>
+            <div><p class="fig-label">Agreement with the official series</p><p class="fig-value">r = 0.915</p></div>
+          </div>
+          <p class="project-stack">Federal Employment Agency API · PostgreSQL · SQL · time-series and seasonal analysis · automated monthly updates · data visualisation</p>
+          <ul>
+            <li>235 monthly values per district from January 2007, taken directly from the official interface</li>
+            <li>Seasonal adjustment in SQL, result checked against the official series</li>
+            <li>Limits of the method documented openly rather than in the small print</li>
+          </ul>
+          <p class="channel-action">
+            <a class="button button-gold" href="../rsa/">View the analysis <span aria-hidden="true">↗</span></a>
+          </p>
+        </article>
       </section>
 
       <section class="news-section" id="news">
