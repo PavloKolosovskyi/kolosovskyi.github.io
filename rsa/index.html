@@ -1,0 +1,513 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RSA – Regionaler Saison-Abweichungsindex · Kreis Mettmann</title>
+<meta name="description" content="Saisonbereinigte Betrachtung des Arbeitsmarktes auf Kreisebene. Eigene Berechnung auf Grundlage der Statistik der Bundesagentur für Arbeit.">
+<style>
+:root {
+  color-scheme: light;
+  --plane:      #f9f9f7;
+  --surface:    #fcfcfb;
+  --ink:        #0b0b0b;
+  --ink-2:      #52514e;
+  --muted:      #898781;
+  --grid:       #e1e0d9;
+  --achse:      #c3c2b7;
+  --rand:       rgba(11,11,11,.10);
+  --serie:      #2a78d6;
+  --pol-hoch:   #e34948;
+  --pol-tief:   #2a78d6;
+  --mitte:      #f0efec;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --plane:    #0d0d0d;
+    --surface:  #1a1a19;
+    --ink:      #ffffff;
+    --ink-2:    #c3c2b7;
+    --muted:    #898781;
+    --grid:     #2c2c2a;
+    --achse:    #383835;
+    --rand:     rgba(255,255,255,.10);
+    --serie:    #3987e5;
+    --pol-hoch: #e66767;
+    --pol-tief: #3987e5;
+    --mitte:    #383835;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; padding: 0 1.25rem 5rem; background: var(--plane); color: var(--ink);
+  font: 16px/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+main { max-width: 62rem; margin: 0 auto; }
+
+header { padding: 3.5rem 0 2.4rem; border-bottom: 1px solid var(--rand); }
+h1 { font-size: clamp(1.7rem, 4vw, 2.3rem); line-height: 1.15; margin: 0 0 .6rem;
+     letter-spacing: -.022em; font-weight: 650; }
+.claim { color: var(--ink-2); font-size: 1.05rem; max-width: 46rem; margin: 0; }
+.marke { font-size: .74rem; letter-spacing: .1em; text-transform: uppercase;
+         color: var(--muted); margin: 0 0 .9rem; font-weight: 600; }
+
+h2 { font-size: 1.2rem; margin: 3.2rem 0 .3rem; letter-spacing: -.015em;
+     font-weight: 620; }
+.unter { color: var(--ink-2); margin: .35rem 0 1.1rem; max-width: 46rem; }
+
+.arbeitsprobe { margin-top: 2.4rem; background: var(--surface);
+               border: 1px solid var(--rand); border-left: 3px solid var(--serie);
+               border-radius: 12px; padding: 1.4rem 1.6rem; max-width: 46rem; }
+.arbeitsprobe .marke { margin-bottom: .6rem; }
+.arbeitsprobe p { margin: 0 0 .8rem; color: var(--ink-2); }
+.arbeitsprobe p:last-child { margin-bottom: 0; }
+.signatur { font-size: .9rem; }
+.signatur strong { color: var(--ink); }
+
+.flaeche { background: var(--surface); border: 1px solid var(--rand);
+           border-radius: 12px; padding: 1.3rem 1.4rem; }
+
+.held { margin-top: 2.4rem; display: grid; gap: 2rem;
+        grid-template-columns: minmax(0,auto) minmax(0,1fr); align-items: center; }
+@media (max-width: 46rem) { .held { grid-template-columns: 1fr; gap: 1.2rem; } }
+.held .zahl { font-size: clamp(3.2rem, 10vw, 4.6rem); line-height: .95;
+              font-weight: 660; letter-spacing: -.04em; }
+.held .marke2 { font-size: .74rem; letter-spacing: .1em; text-transform: uppercase;
+                color: var(--muted); font-weight: 600; margin-bottom: .5rem; }
+.held p { margin: 0; color: var(--ink-2); }
+.hoch { color: var(--pol-hoch); }
+.tief { color: var(--pol-tief); }
+
+.kacheln { display: grid; gap: 1px; background: var(--rand); margin-top: 1.7rem;
+           border: 1px solid var(--rand); border-radius: 12px; overflow: hidden;
+           grid-template-columns: repeat(auto-fit, minmax(10.5rem, 1fr)); }
+.kachel { background: var(--surface); padding: 1rem 1.1rem 1.1rem; }
+.kachel .label { font-size: .73rem; letter-spacing: .07em; text-transform: uppercase;
+                 color: var(--muted); font-weight: 600; }
+.kachel .wert { font-size: 1.55rem; font-weight: 620; letter-spacing: -.02em;
+                margin-top: .15rem; }
+.kachel .fuss { font-size: .82rem; color: var(--muted); }
+
+.paar { margin-top: 1.6rem; display: grid; gap: 1.1rem;
+        grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); }
+.paar h3 { font-size: .95rem; margin: 0 0 .3rem; font-weight: 620; }
+.paar p { margin: 0; color: var(--ink-2); font-size: .93rem; }
+
+.diagramm { background: var(--surface); border: 1px solid var(--rand);
+            border-radius: 12px; padding: 1.3rem 1.2rem 1rem; }
+.dia-kopf { display: flex; justify-content: space-between; align-items: baseline;
+            gap: 1rem; margin-bottom: .9rem; flex-wrap: wrap; }
+.dia-kopf .titel { font-weight: 600; font-size: .95rem; }
+.dia-kopf .notiz { color: var(--muted); font-size: .85rem; }
+/* Chart.js verlangt einen Elternknoten, der NUR dem Canvas gehoert. Steht
+   noch etwas anderes darin - hier der Diagrammkopf -, misst es die Breite
+   als 0 und zeichnet nichts. Deshalb diese eigene Flaeche mit fester Hoehe. */
+.dia-flaeche { position: relative; width: 100%; height: 320px; }
+.dia-flaeche.flach { height: 260px; }
+@media (max-width: 46rem) {
+  .dia-flaeche { height: 260px; }
+  .dia-flaeche.flach { height: 220px; }
+}
+
+/* Beide Achsen scrollen im Container, nicht in der Seite. Die Hoehenkappe
+   ist es, die den klebenden Tabellenkopf ueberhaupt sinnvoll macht - ohne
+   sie gaebe es im Container nichts, woran er kleben koennte. */
+.scroll { overflow: auto; max-height: 34rem; border: 1px solid var(--rand);
+          border-radius: 12px; background: var(--surface);
+          overscroll-behavior: contain; }
+table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums;
+        font-size: .92rem; }
+th, td { padding: .5rem .7rem; text-align: left; white-space: nowrap;
+         border-bottom: 1px solid var(--grid); }
+thead th { font-size: .72rem; text-transform: uppercase; letter-spacing: .06em;
+           color: var(--muted); font-weight: 600; position: sticky; top: 0;
+           background: var(--surface); border-bottom: 1px solid var(--achse); }
+tbody tr:last-child td { border-bottom: 0; }
+td.r, th.r { text-align: right; }
+tr.hier td { font-weight: 650; }
+tr.hier td:first-child { box-shadow: inset 3px 0 0 var(--serie); }
+
+td.balken { width: 8.5rem; padding-right: 1rem; }
+td.kldb { color: var(--muted); font-variant-numeric: tabular-nums;
+          width: 3.5rem; }
+span.hoch, span.tief { font-weight: 600; }
+.spur { position: relative; display: block; height: 9px; background: var(--mitte);
+        border-radius: 2px; }
+.spur::after { content: ""; position: absolute; left: 50%; top: -2px; bottom: -2px;
+               width: 1px; background: var(--achse); }
+.spur i { position: absolute; top: 0; height: 9px; border-radius: 2px; display: block; }
+
+footer { margin-top: 3.5rem; padding-top: 1.4rem; border-top: 1px solid var(--rand);
+         color: var(--ink-2); font-size: .88rem; }
+footer p { margin: .45rem 0; }
+a { color: var(--serie); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+.pflicht { color: var(--ink); font-weight: 600; }
+.fussnote { color: var(--muted); font-size: .85rem; max-width: 46rem; }
+</style>
+</head>
+<body>
+<main>
+
+<header>
+  <p class="marke">Regionaler Saison-Abweichungsindex</p>
+  <h1>Ist dieser Anstieg normal für die Jahreszeit?</h1>
+  <p class="claim">
+    Die Bundesagentur für Arbeit veröffentlicht saisonbereinigte Werte für Bund
+    und Länder – aber nicht für die rund 400 Kreise. Auf lokaler Ebene bleibt
+    damit offen, ob ein Anstieg der Arbeitslosigkeit jahreszeitlich üblich oder
+    auffällig ist. Diese Auswertung schließt genau diese Lücke.
+  </p>
+</header>
+
+<section class="arbeitsprobe">
+  <p class="marke">Arbeitsprobe</p>
+  <p>
+    Gebaut habe ich das für eine Frage, die mich selbst betraf: Ist der Anstieg
+    in meinem Kreis normal? Die Daten kommen über die Schnittstelle der
+    Bundesagentur für Arbeit – 235 Monatswerte ab Januar 2007 für jeden der
+    53 Kreise in Nordrhein-Westfalen, jeden Monat automatisch aktualisiert.
+  </p>
+  <p>
+    Damit es nicht bei einer Behauptung bleibt, habe ich das Verfahren dort
+    geprüft, wo die BA eigene saisonbereinigte Zahlen veröffentlicht: für
+    Deutschland. Die Übereinstimmung liegt bei <strong>0,915</strong> über 223
+    gemeinsame Monate. Wo mein Verfahren schwächer ist als das amtliche, steht
+    es offen dabei – nicht im Kleingedruckten.
+  </p>
+  <p>
+    Technisch steckt darin: die Schnittstelle der Bundesagentur für Arbeit,
+    eine PostgreSQL-Datenbank mit rund 49.000 Monatswerten, die
+    Saisonbereinigung als SQL, ein monatlicher Lauf und diese Seite, die
+    daraus erzeugt wird. Gebaut habe ich es, um mit Daten arbeiten zu können
+    statt über sie zu reden.
+  </p>
+  <p>
+    Ich bewerbe mich in Marketing, Content und angrenzenden Medienberufen.
+    In meinem Zielberuf – Werbung und Marketing – kommen derzeit 9,6 Arbeitslose auf eine gemeldete Stelle, gut das Doppelte des Landesschnitts von 4,9. Wie es in diesen Berufsgruppen insgesamt aussieht, steht weiter
+    unten – nachgerechnet statt geschätzt. Genau deshalb halte ich auch
+    Aufgaben im Blick, bei denen Auswertung und Datenarbeit zum Job gehören.
+  </p>
+  <p>
+    Wer wissen will, wie ich arbeite, sieht es hier von Anfang bis Ende:
+    Fragestellung, Datenbeschaffung, Prüfung – und die Stellen, an denen das
+    Verfahren an seine Grenzen kommt, offen benannt.
+  </p>
+  <p class="signatur">
+    <strong>Pavlo Kolosovskyi</strong> · Marketing &amp; Content ·
+    <a href="https://kolosovskyi.de/">Lebenslauf</a> ·
+    <a href="https://kolosovskyi.de/#kontakt">Kontakt</a>
+  </p>
+</section>
+
+<section class="held">
+  <div>
+    <div class="marke2">RSA · Kreis Mettmann</div>
+    <div class="zahl tief">-0,7 %</div>
+  </div>
+  <p>
+    Im Juli 2026 liegt die Arbeitslosigkeit im Kreis
+    Mettmann <strong>unter</strong> dem saisonal üblichen Niveau
+    der letzten zwölf Monate. Gemeldet sind <strong>19.210</strong>
+    Arbeitslose, saisonal zu erwarten wären <strong>19.346</strong>.
+    Unter den 53 Kreisen in Nordrhein-Westfalen ist das Rang <strong>25</strong>.
+  </p>
+</section>
+
+<div class="kacheln">
+  <div class="kachel"><div class="label">Arbeitslose</div>
+    <div class="wert">19.210</div><div class="fuss">gemeldet</div></div>
+  <div class="kachel"><div class="label">Erwartung</div>
+    <div class="wert">19.346</div><div class="fuss">saisonal üblich</div></div>
+  <div class="kachel"><div class="label">z. Vormonat</div>
+    <div class="wert">-0,1 %</div><div class="fuss">saisonbereinigt</div></div>
+  <div class="kachel"><div class="label">Gem. Stellen</div>
+    <div class="wert">2.370</div><div class="fuss">Bestand</div></div>
+  <div class="kachel"><div class="label">Je Stelle</div>
+    <div class="wert">8,1</div><div class="fuss">Arbeitslose</div></div>
+  <div class="kachel"><div class="label">Kombiniert</div>
+    <div class="wert hoch">+0,25</div>
+    <div class="fuss">Rang 39 von 53</div></div>
+</div>
+
+<div class="paar">
+  <div class="flaeche">
+    <h3>Wie der RSA zu lesen ist</h3>
+    <p>Um wie viel Prozent der saisonbereinigte Wert über oder unter dem eigenen
+    Niveau der letzten zwölf Monate liegt. Ein negativer Wert ist günstig. Null
+    heißt: genau so, wie es die Jahreszeit erwarten lässt.</p>
+  </div>
+  <div class="flaeche">
+    <h3>Was der kombinierte Index ergänzt</h3>
+    <p>Beides zusammen ist <strong>ungünstiger</strong> als saisonal üblich – Rang 39 von 53 in Nordrhein-Westfalen. Er wertet Arbeitslosigkeit und gemeldete Stellen zusammen aus,
+    jede Reihe zuvor an ihrer eigenen Streuung normiert. Einheit sind
+    Standardabweichungen, nicht Prozent.</p>
+  </div>
+</div>
+
+<h2>Arbeitslosigkeit gegen Erwartung</h2>
+<p class="unter">Die letzten 5 Jahre. Wo die durchgezogene Linie
+über der gestrichelten liegt, ist die Arbeitslosigkeit höher, als es die
+Jahreszeit erwarten lässt.</p>
+<div class="diagramm">
+  <div class="dia-kopf">
+    <span class="titel">Kreis Mettmann</span>
+    <span class="notiz">Personen, Monatswerte</span>
+  </div>
+  <div class="dia-flaeche"><canvas id="verlauf"></canvas></div>
+</div>
+
+<h2>Arbeitslose je gemeldete Stelle</h2>
+<p class="unter">Wie viele Arbeitslose rechnerisch auf eine der Bundesagentur
+gemeldete Stelle kommen. Tiefstand der Reihe: <strong>3,4</strong>
+im September 2018 – heute <strong>8,1</strong>.</p>
+<div class="diagramm">
+  <div class="dia-kopf">
+    <span class="titel">Kreis Mettmann</span>
+    <span class="notiz">seit 2007</span>
+  </div>
+  <div class="dia-flaeche flach"><canvas id="andrang"></canvas></div>
+</div>
+<p class="fussnote" style="margin-top:.9rem">
+  <strong>Vorsicht bei der Deutung.</strong> Arbeitslose zählen am
+  <em>Wohnort</em>, gemeldete Stellen am <em>Arbeitsort</em>. In
+  Einpendlerstädten fällt die Kennzahl deshalb zu günstig aus, in
+  Auspendlerkreisen zu ungünstig. Außerdem wird der Bundesagentur nur ein Teil
+  aller offenen Stellen gemeldet – die Kennzahl misst den gemeldeten Bestand,
+  nicht den gesamten Arbeitskräftebedarf.
+</p>
+
+<h2>Alle 53 Kreise in Nordrhein-Westfalen</h2>
+<p class="unter">Sortiert nach RSA, günstigster Wert zuerst. Der Balken zeigt die
+Abweichung nach links (unter der Erwartung) oder nach rechts (darüber).</p>
+<div class="scroll">
+<table>
+  <thead><tr>
+    <th class="r">Rang</th><th>Kreis</th><th>Abweichung</th><th class="r">RSA</th>
+    <th class="r">Ist</th><th class="r">Erwartung</th>
+    <th class="r">Stellen</th><th class="r">je Stelle</th>
+    <th class="r">RSA Stellen</th><th class="r">kombiniert</th>
+  </tr></thead>
+  <tbody>
+    <tr><td class="r">1</td><td>Coesfeld</td><td class="balken"><span class="spur"><i style="left:0.0%;width:50.0%;background:var(--pol-tief)"></i></span></td><td class="r tief">-7,4 %</td><td class="r">5.000</td><td class="r">5.400</td><td class="r">1.470</td><td class="r">3,4</td><td class="r">-9,0 %</td><td class="r tief">-0,33</td></tr>
+    <tr><td class="r">2</td><td>Borken</td><td class="balken"><span class="spur"><i style="left:15.9%;width:34.1%;background:var(--pol-tief)"></i></span></td><td class="r tief">-5,0 %</td><td class="r">9.760</td><td class="r">10.279</td><td class="r">3.240</td><td class="r">3,0</td><td class="r">-8,4 %</td><td class="r tief">-0,13</td></tr>
+    <tr><td class="r">3</td><td>Mönchengladbach, Stadt</td><td class="balken"><span class="spur"><i style="left:17.6%;width:32.4%;background:var(--pol-tief)"></i></span></td><td class="r tief">-4,8 %</td><td class="r">15.110</td><td class="r">15.872</td><td class="r">2.270</td><td class="r">6,7</td><td class="r">-12,3 %</td><td class="r tief">-0,21</td></tr>
+    <tr><td class="r">4</td><td>Münster, Stadt</td><td class="balken"><span class="spur"><i style="left:23.5%;width:26.5%;background:var(--pol-tief)"></i></span></td><td class="r tief">-3,9 %</td><td class="r">9.320</td><td class="r">9.702</td><td class="r">2.370</td><td class="r">3,9</td><td class="r">+10,0 %</td><td class="r tief">-1,85</td></tr>
+    <tr><td class="r">5</td><td>Wuppertal, Stadt</td><td class="balken"><span class="spur"><i style="left:29.3%;width:20.7%;background:var(--pol-tief)"></i></span></td><td class="r tief">-3,1 %</td><td class="r">19.980</td><td class="r">20.611</td><td class="r">1.630</td><td class="r">12,3</td><td class="r">+21,5 %</td><td class="r tief">-1,94</td></tr>
+    <tr><td class="r">6</td><td>Krefeld, Stadt</td><td class="balken"><span class="spur"><i style="left:31.1%;width:18.9%;background:var(--pol-tief)"></i></span></td><td class="r tief">-2,8 %</td><td class="r">13.400</td><td class="r">13.786</td><td class="r">1.820</td><td class="r">7,4</td><td class="r">+6,1 %</td><td class="r tief">-1,24</td></tr>
+    <tr><td class="r">7</td><td>Mülheim an der Ruhr, Stadt</td><td class="balken"><span class="spur"><i style="left:31.6%;width:18.4%;background:var(--pol-tief)"></i></span></td><td class="r tief">-2,7 %</td><td class="r">7.120</td><td class="r">7.320</td><td class="r">1.520</td><td class="r">4,7</td><td class="r">+9,5 %</td><td class="r tief">-1,37</td></tr>
+    <tr><td class="r">8</td><td>Rheinisch-Bergischer Kreis</td><td class="balken"><span class="spur"><i style="left:33.3%;width:16.7%;background:var(--pol-tief)"></i></span></td><td class="r tief">-2,5 %</td><td class="r">9.820</td><td class="r">10.070</td><td class="r">1.420</td><td class="r">6,9</td><td class="r">+18,7 %</td><td class="r tief">-2,03</td></tr>
+    <tr><td class="r">9</td><td>Minden-Lübbecke</td><td class="balken"><span class="spur"><i style="left:33.8%;width:16.2%;background:var(--pol-tief)"></i></span></td><td class="r tief">-2,4 %</td><td class="r">11.000</td><td class="r">11.270</td><td class="r">2.000</td><td class="r">5,5</td><td class="r">-17,2 %</td><td class="r hoch">+0,88</td></tr>
+    <tr><td class="r">10</td><td>Paderborn</td><td class="balken"><span class="spur"><i style="left:34.5%;width:15.5%;background:var(--pol-tief)"></i></span></td><td class="r tief">-2,3 %</td><td class="r">10.870</td><td class="r">11.126</td><td class="r">2.310</td><td class="r">4,7</td><td class="r">-1,1 %</td><td class="r tief">-0,30</td></tr>
+    <tr><td class="r">11</td><td>Rhein-Erft-Kreis</td><td class="balken"><span class="spur"><i style="left:35.1%;width:14.9%;background:var(--pol-tief)"></i></span></td><td class="r tief">-2,2 %</td><td class="r">17.650</td><td class="r">18.048</td><td class="r">3.270</td><td class="r">5,4</td><td class="r">+0,9 %</td><td class="r tief">-0,56</td></tr>
+    <tr><td class="r">12</td><td>Olpe</td><td class="balken"><span class="spur"><i style="left:35.2%;width:14.8%;background:var(--pol-tief)"></i></span></td><td class="r tief">-2,2 %</td><td class="r">3.620</td><td class="r">3.701</td><td class="r">890</td><td class="r">4,1</td><td class="r">-9,0 %</td><td class="r hoch">+0,18</td></tr>
+    <tr><td class="r">13</td><td>Kleve</td><td class="balken"><span class="spur"><i style="left:35.5%;width:14.5%;background:var(--pol-tief)"></i></span></td><td class="r tief">-2,2 %</td><td class="r">10.450</td><td class="r">10.680</td><td class="r">1.520</td><td class="r">6,9</td><td class="r">-1,5 %</td><td class="r tief">-0,22</td></tr>
+    <tr><td class="r">14</td><td>Heinsberg</td><td class="balken"><span class="spur"><i style="left:35.9%;width:14.1%;background:var(--pol-tief)"></i></span></td><td class="r tief">-2,1 %</td><td class="r">8.370</td><td class="r">8.549</td><td class="r">1.310</td><td class="r">6,4</td><td class="r">-8,3 %</td><td class="r hoch">+0,26</td></tr>
+    <tr><td class="r">15</td><td>Köln, Stadt</td><td class="balken"><span class="spur"><i style="left:37.0%;width:13.0%;background:var(--pol-tief)"></i></span></td><td class="r tief">-1,9 %</td><td class="r">56.620</td><td class="r">57.730</td><td class="r">44.070</td><td class="r">1,3</td><td class="r">+69,2 %</td><td class="r tief">-2,48</td></tr>
+    <tr><td class="r">16</td><td>Essen, Stadt</td><td class="balken"><span class="spur"><i style="left:37.1%;width:12.9%;background:var(--pol-tief)"></i></span></td><td class="r tief">-1,9 %</td><td class="r">35.250</td><td class="r">35.936</td><td class="r">3.350</td><td class="r">10,5</td><td class="r">-6,0 %</td><td class="r tief">-0,08</td></tr>
+    <tr><td class="r">17</td><td>Warendorf</td><td class="balken"><span class="spur"><i style="left:37.8%;width:12.2%;background:var(--pol-tief)"></i></span></td><td class="r tief">-1,8 %</td><td class="r">9.400</td><td class="r">9.573</td><td class="r">2.560</td><td class="r">3,7</td><td class="r">+10,2 %</td><td class="r tief">-1,00</td></tr>
+    <tr><td class="r">18</td><td>Rhein-Kreis Neuss</td><td class="balken"><span class="spur"><i style="left:38.3%;width:11.7%;background:var(--pol-tief)"></i></span></td><td class="r tief">-1,7 %</td><td class="r">16.480</td><td class="r">16.770</td><td class="r">2.560</td><td class="r">6,4</td><td class="r">+4,1 %</td><td class="r tief">-0,65</td></tr>
+    <tr><td class="r">19</td><td>Höxter</td><td class="balken"><span class="spur"><i style="left:40.8%;width:9.2%;background:var(--pol-tief)"></i></span></td><td class="r tief">-1,4 %</td><td class="r">3.390</td><td class="r">3.437</td><td class="r">1.370</td><td class="r">2,5</td><td class="r">+8,2 %</td><td class="r tief">-0,86</td></tr>
+    <tr><td class="r">20</td><td>Remscheid, Stadt</td><td class="balken"><span class="spur"><i style="left:41.3%;width:8.7%;background:var(--pol-tief)"></i></span></td><td class="r tief">-1,3 %</td><td class="r">4.990</td><td class="r">5.055</td><td class="r">880</td><td class="r">5,7</td><td class="r">+42,9 %</td><td class="r tief">-1,91</td></tr>
+    <tr><td class="r">21</td><td>Düsseldorf, Stadt</td><td class="balken"><span class="spur"><i style="left:41.8%;width:8.2%;background:var(--pol-tief)"></i></span></td><td class="r tief">-1,2 %</td><td class="r">29.480</td><td class="r">29.842</td><td class="r">4.650</td><td class="r">6,3</td><td class="r">+4,7 %</td><td class="r tief">-0,66</td></tr>
+    <tr><td class="r">22</td><td>Bottrop, Stadt</td><td class="balken"><span class="spur"><i style="left:42.6%;width:7.4%;background:var(--pol-tief)"></i></span></td><td class="r tief">-1,1 %</td><td class="r">5.140</td><td class="r">5.197</td><td class="r">700</td><td class="r">7,3</td><td class="r">-2,9 %</td><td class="r tief">-0,04</td></tr>
+    <tr><td class="r">23</td><td>Gütersloh</td><td class="balken"><span class="spur"><i style="left:44.2%;width:5.8%;background:var(--pol-tief)"></i></span></td><td class="r tief">-0,9 %</td><td class="r">11.200</td><td class="r">11.298</td><td class="r">3.270</td><td class="r">3,4</td><td class="r">+11,6 %</td><td class="r tief">-0,98</td></tr>
+    <tr><td class="r">24</td><td>Städteregion Aachen</td><td class="balken"><span class="spur"><i style="left:45.0%;width:5.0%;background:var(--pol-tief)"></i></span></td><td class="r tief">-0,7 %</td><td class="r">24.650</td><td class="r">24.834</td><td class="r">3.580</td><td class="r">6,9</td><td class="r">-4,7 %</td><td class="r hoch">+0,23</td></tr>
+    <tr class="hier"><td class="r">25</td><td>Mettmann</td><td class="balken"><span class="spur"><i style="left:45.3%;width:4.7%;background:var(--pol-tief)"></i></span></td><td class="r tief">-0,7 %</td><td class="r">19.210</td><td class="r">19.346</td><td class="r">2.370</td><td class="r">8,1</td><td class="r">-4,9 %</td><td class="r hoch">+0,25</td></tr>
+    <tr><td class="r">26</td><td>Gelsenkirchen, Stadt</td><td class="balken"><span class="spur"><i style="left:46.0%;width:4.0%;background:var(--pol-tief)"></i></span></td><td class="r tief">-0,6 %</td><td class="r">21.210</td><td class="r">21.337</td><td class="r">1.500</td><td class="r">14,1</td><td class="r">+3,2 %</td><td class="r tief">-0,39</td></tr>
+    <tr><td class="r">27</td><td>Ennepe-Ruhr-Kreis</td><td class="balken"><span class="spur"><i style="left:46.1%;width:3.9%;background:var(--pol-tief)"></i></span></td><td class="r tief">-0,6 %</td><td class="r">12.930</td><td class="r">13.005</td><td class="r">1.680</td><td class="r">7,7</td><td class="r">-4,5 %</td><td class="r hoch">+0,20</td></tr>
+    <tr><td class="r">28</td><td>Euskirchen</td><td class="balken"><span class="spur"><i style="left:46.8%;width:3.2%;background:var(--pol-tief)"></i></span></td><td class="r tief">-0,5 %</td><td class="r">6.420</td><td class="r">6.451</td><td class="r">1.720</td><td class="r">3,7</td><td class="r">+10,7 %</td><td class="r tief">-1,10</td></tr>
+    <tr><td class="r">29</td><td>Recklinghausen</td><td class="balken"><span class="spur"><i style="left:48.0%;width:2.0%;background:var(--pol-tief)"></i></span></td><td class="r tief">-0,3 %</td><td class="r">28.890</td><td class="r">28.976</td><td class="r">4.800</td><td class="r">6,0</td><td class="r">-3,9 %</td><td class="r hoch">+0,28</td></tr>
+    <tr><td class="r">30</td><td>Hagen, Stadt der FernUniversität</td><td class="balken"><span class="spur"><i style="left:48.0%;width:2.0%;background:var(--pol-tief)"></i></span></td><td class="r tief">-0,3 %</td><td class="r">12.910</td><td class="r">12.948</td><td class="r">1.330</td><td class="r">9,7</td><td class="r">-17,3 %</td><td class="r hoch">+1,38</td></tr>
+    <tr><td class="r">31</td><td>Siegen-Wittgenstein</td><td class="balken"><span class="spur"><i style="left:48.4%;width:1.6%;background:var(--pol-tief)"></i></span></td><td class="r tief">-0,2 %</td><td class="r">9.790</td><td class="r">9.813</td><td class="r">1.860</td><td class="r">5,3</td><td class="r">+3,1 %</td><td class="r tief">-0,24</td></tr>
+    <tr><td class="r">32</td><td>Hamm, Stadt</td><td class="balken"><span class="spur"><i style="left:49.2%;width:0.8%;background:var(--pol-tief)"></i></span></td><td class="r tief">-0,1 %</td><td class="r">8.630</td><td class="r">8.640</td><td class="r">1.690</td><td class="r">5,1</td><td class="r">-3,2 %</td><td class="r hoch">+0,17</td></tr>
+    <tr><td class="r">33</td><td>Wesel</td><td class="balken"><span class="spur"><i style="left:49.3%;width:0.7%;background:var(--pol-tief)"></i></span></td><td class="r tief">-0,1 %</td><td class="r">18.610</td><td class="r">18.629</td><td class="r">2.320</td><td class="r">8,0</td><td class="r">-1,8 %</td><td class="r hoch">+0,07</td></tr>
+    <tr><td class="r">34</td><td>Oberhausen, Stadt</td><td class="balken"><span class="spur"><i style="left:49.5%;width:0.5%;background:var(--pol-tief)"></i></span></td><td class="r tief">-0,1 %</td><td class="r">13.040</td><td class="r">13.049</td><td class="r">2.230</td><td class="r">5,8</td><td class="r">-8,0 %</td><td class="r hoch">+0,56</td></tr>
+    <tr><td class="r">35</td><td>Herne, Stadt</td><td class="balken"><span class="spur"><i style="left:50.0%;width:0.0%;background:var(--pol-tief)"></i></span></td><td class="r tief">-0,0 %</td><td class="r">10.370</td><td class="r">10.370</td><td class="r">1.090</td><td class="r">9,5</td><td class="r">-17,4 %</td><td class="r hoch">+1,17</td></tr>
+    <tr><td class="r">36</td><td>Rhein-Sieg-Kreis</td><td class="balken"><span class="spur"><i style="left:50%;width:0.9%;background:var(--pol-hoch)"></i></span></td><td class="r hoch">+0,1 %</td><td class="r">19.920</td><td class="r">19.892</td><td class="r">2.820</td><td class="r">7,1</td><td class="r">+7,3 %</td><td class="r tief">-0,68</td></tr>
+    <tr><td class="r">37</td><td>Bielefeld, Stadt</td><td class="balken"><span class="spur"><i style="left:50%;width:1.8%;background:var(--pol-hoch)"></i></span></td><td class="r hoch">+0,3 %</td><td class="r">17.540</td><td class="r">17.494</td><td class="r">2.390</td><td class="r">7,3</td><td class="r">-14,7 %</td><td class="r hoch">+1,32</td></tr>
+    <tr><td class="r">38</td><td>Unna</td><td class="balken"><span class="spur"><i style="left:50%;width:2.2%;background:var(--pol-hoch)"></i></span></td><td class="r hoch">+0,3 %</td><td class="r">16.740</td><td class="r">16.685</td><td class="r">2.500</td><td class="r">6,7</td><td class="r">+0,5 %</td><td class="r hoch">+0,04</td></tr>
+    <tr><td class="r">39</td><td>Hochsauerlandkreis</td><td class="balken"><span class="spur"><i style="left:50%;width:2.6%;background:var(--pol-hoch)"></i></span></td><td class="r hoch">+0,4 %</td><td class="r">7.500</td><td class="r">7.471</td><td class="r">2.300</td><td class="r">3,3</td><td class="r">+0,2 %</td><td class="r hoch">+0,04</td></tr>
+    <tr><td class="r">40</td><td>Herford</td><td class="balken"><span class="spur"><i style="left:50%;width:3.2%;background:var(--pol-hoch)"></i></span></td><td class="r hoch">+0,5 %</td><td class="r">9.240</td><td class="r">9.196</td><td class="r">1.980</td><td class="r">4,7</td><td class="r">-1,0 %</td><td class="r hoch">+0,15</td></tr>
+    <tr><td class="r">41</td><td>Bonn, Stadt</td><td class="balken"><span class="spur"><i style="left:50%;width:3.4%;background:var(--pol-hoch)"></i></span></td><td class="r hoch">+0,5 %</td><td class="r">14.140</td><td class="r">14.069</td><td class="r">2.330</td><td class="r">6,1</td><td class="r">+8,7 %</td><td class="r tief">-0,59</td></tr>
+    <tr><td class="r">42</td><td>Leverkusen, Stadt</td><td class="balken"><span class="spur"><i style="left:50%;width:3.6%;background:var(--pol-hoch)"></i></span></td><td class="r hoch">+0,5 %</td><td class="r">7.100</td><td class="r">7.062</td><td class="r">1.300</td><td class="r">5,5</td><td class="r">+6,1 %</td><td class="r tief">-0,30</td></tr>
+    <tr><td class="r">43</td><td>Dortmund, Stadt</td><td class="balken"><span class="spur"><i style="left:50%;width:3.7%;background:var(--pol-hoch)"></i></span></td><td class="r hoch">+0,5 %</td><td class="r">40.910</td><td class="r">40.688</td><td class="r">4.030</td><td class="r">10,2</td><td class="r">-7,4 %</td><td class="r hoch">+0,72</td></tr>
+    <tr><td class="r">44</td><td>Duisburg, Stadt</td><td class="balken"><span class="spur"><i style="left:50%;width:4.1%;background:var(--pol-hoch)"></i></span></td><td class="r hoch">+0,6 %</td><td class="r">36.040</td><td class="r">35.821</td><td class="r">3.330</td><td class="r">10,8</td><td class="r">-5,2 %</td><td class="r hoch">+0,55</td></tr>
+    <tr><td class="r">45</td><td>Märkischer Kreis</td><td class="balken"><span class="spur"><i style="left:50%;width:4.1%;background:var(--pol-hoch)"></i></span></td><td class="r hoch">+0,6 %</td><td class="r">18.980</td><td class="r">18.864</td><td class="r">3.500</td><td class="r">5,4</td><td class="r">-4,5 %</td><td class="r hoch">+0,38</td></tr>
+    <tr><td class="r">46</td><td>Steinfurt</td><td class="balken"><span class="spur"><i style="left:50%;width:5.3%;background:var(--pol-hoch)"></i></span></td><td class="r hoch">+0,8 %</td><td class="r">14.360</td><td class="r">14.248</td><td class="r">3.170</td><td class="r">4,5</td><td class="r">-5,6 %</td><td class="r hoch">+0,56</td></tr>
+    <tr><td class="r">47</td><td>Viersen</td><td class="balken"><span class="spur"><i style="left:50%;width:10.6%;background:var(--pol-hoch)"></i></span></td><td class="r hoch">+1,6 %</td><td class="r">9.900</td><td class="r">9.747</td><td class="r">1.770</td><td class="r">5,6</td><td class="r">+1,4 %</td><td class="r hoch">+0,18</td></tr>
+    <tr><td class="r">48</td><td>Solingen, Klingenstadt</td><td class="balken"><span class="spur"><i style="left:50%;width:10.7%;background:var(--pol-hoch)"></i></span></td><td class="r hoch">+1,6 %</td><td class="r">7.770</td><td class="r">7.648</td><td class="r">480</td><td class="r">16,2</td><td class="r">+1,8 %</td><td class="r hoch">+0,20</td></tr>
+    <tr><td class="r">49</td><td>Oberbergischer Kreis</td><td class="balken"><span class="spur"><i style="left:50%;width:12.0%;background:var(--pol-hoch)"></i></span></td><td class="r hoch">+1,8 %</td><td class="r">8.940</td><td class="r">8.784</td><td class="r">2.400</td><td class="r">3,7</td><td class="r">+9,8 %</td><td class="r tief">-0,43</td></tr>
+    <tr><td class="r">50</td><td>Soest</td><td class="balken"><span class="spur"><i style="left:50%;width:12.7%;background:var(--pol-hoch)"></i></span></td><td class="r hoch">+1,9 %</td><td class="r">10.810</td><td class="r">10.611</td><td class="r">2.720</td><td class="r">4,0</td><td class="r">+7,4 %</td><td class="r tief">-0,29</td></tr>
+    <tr><td class="r">51</td><td>Bochum, Stadt</td><td class="balken"><span class="spur"><i style="left:50%;width:14.3%;background:var(--pol-hoch)"></i></span></td><td class="r hoch">+2,1 %</td><td class="r">18.980</td><td class="r">18.587</td><td class="r">2.890</td><td class="r">6,6</td><td class="r">-10,7 %</td><td class="r hoch">+1,33</td></tr>
+    <tr><td class="r">52</td><td>Düren</td><td class="balken"><span class="spur"><i style="left:50%;width:14.5%;background:var(--pol-hoch)"></i></span></td><td class="r hoch">+2,2 %</td><td class="r">11.810</td><td class="r">11.561</td><td class="r">1.430</td><td class="r">8,3</td><td class="r">-12,3 %</td><td class="r hoch">+1,29</td></tr>
+    <tr><td class="r">53</td><td>Lippe</td><td class="balken"><span class="spur"><i style="left:50%;width:21.6%;background:var(--pol-hoch)"></i></span></td><td class="r hoch">+3,2 %</td><td class="r">12.380</td><td class="r">11.996</td><td class="r">2.480</td><td class="r">5,0</td><td class="r">+0,4 %</td><td class="r hoch">+0,55</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2>Das eigene Berufsfeld</h2>
+<p class="unter">Marketing, Content und Medien – die Berufsgruppen, in denen ich
+mich bewerbe. Sortiert nach Zahl der Arbeitslosen. Gefärbt ist die letzte
+Spalte: <span class="hoch">enger</span> oder <span class="tief">weiter</span> als
+der Landesarbeitsmarkt insgesamt (4,9 Arbeitslose je Stelle).</p>
+<div class="scroll">
+<table>
+  <thead><tr>
+    <th>KldB</th><th>Berufsgruppe</th><th class="r">Arbeitslose</th>
+    <th class="r">Gem. Stellen</th><th class="r">je Stelle</th>
+  </tr></thead>
+  <tbody>
+    <tr><td class="kldb">921</td><td>Werbung und Marketing</td><td class="r">11.301</td><td class="r">1.175</td><td class="r hoch">9,6</td></tr>
+    <tr><td class="kldb">232</td><td>Technische Mediengestaltung</td><td class="r">3.589</td><td class="r">95</td><td class="r hoch">37,8</td></tr>
+    <tr><td class="kldb">924</td><td>Redaktion und Journalismus</td><td class="r">1.438</td><td class="r">43</td><td class="r hoch">33,4</td></tr>
+    <tr><td class="kldb">945</td><td>Veranstaltungs-, Kamera-, Tontechnik</td><td class="r">1.328</td><td class="r">105</td><td class="r hoch">12,6</td></tr>
+    <tr><td class="kldb">944</td><td>Theater-, Film- und Fernsehproduktion</td><td class="r">616</td><td class="r">56</td><td class="r hoch">11,0</td></tr>
+    <tr><td class="kldb">733</td><td>Medien-Dokumentations-Informationsdienst</td><td class="r">535</td><td class="r">55</td><td class="r hoch">9,7</td></tr>
+    <tr><td class="kldb">233</td><td>Fototechnik und Fotografie</td><td class="r">470</td><td class="r">12</td><td class="r hoch">39,2</td></tr>
+    <tr><td class="kldb">922</td><td>Öffentlichkeitsarbeit</td><td class="r">442</td><td class="r">16</td><td class="r hoch">27,6</td></tr>
+    <tr><td class="kldb">923</td><td>Verlags- und Medienwirtschaft</td><td class="r">284</td><td class="r">20</td><td class="r hoch">14,2</td></tr>
+    <tr><td class="kldb">931</td><td>Produkt- und Industriedesign</td><td class="r">223</td><td class="r">9</td><td class="r hoch">24,8</td></tr>
+  </tbody>
+</table>
+</div>
+<p class="fussnote" style="margin-top:.9rem">
+  Quelle: „Arbeitsmarkt nach Berufen (KldB 2010)“, Berichtsmonat
+  Juli 2026. Anders als die Eckwerte gibt es Berufsdaten monatlich
+  <strong>nur bis zur Landesebene</strong> – für Kreise werden sie nicht
+  veröffentlicht. Dieser Abschnitt zeigt deshalb Nordrhein-Westfalen, nicht
+  Kreis Mettmann. Gezählt wird das Anforderungsniveau „Gesamt“; gemeldete
+  Stellen sind nur ein Teil aller offenen Stellen.
+</p>
+
+<h2>Methodik und Prüfung</h2>
+<div class="paar">
+  <div class="flaeche">
+    <h3>Verfahren</h3>
+    <p>Klassische Dekomposition (Ratio-to-Moving-Average) auf 235 Monatswerten ab
+    Januar 2007: zentrierter 2×12-Durchschnitt als Trend, Median je Kalendermonat
+    als Saisonfaktor, Erwartung aus dem Niveau der vorangegangenen zwölf Monate.</p>
+  </div>
+  <div class="flaeche">
+    <h3>Gegen die amtliche Reihe geprüft</h3>
+    <p>Für Deutschland veröffentlicht die BA saisonbereinigte Werte selbst. Dort
+    trifft dieses Verfahren die amtliche Vormonatsveränderung über 223 gemeinsame
+    Monate mit einer Korrelation von <strong>+0,915</strong> bei 0,51
+    Prozentpunkten mittlerer Abweichung.</p>
+  </div>
+</div>
+
+<footer>
+  <p>
+    Berichtsmonat Juli 2026 ·
+    Datenstand der BA Juli 2026 ·
+    Seite erzeugt am 19.08.2026
+  </p>
+  <p>
+    <a href="https://statistik.arbeitsagentur.de/DE/Navigation/Grundlagen/Methodik-Qualitaet/Saisonbereinigung/Saisonbereinigte-Daten-Nav.html">Methodik der Saisonbereinigung bei der BA</a> ·
+    Die BA rechnet mit X-13ARIMA-SEATS; hier steht ein einfacheres Verfahren,
+    dessen Abweichungen gemessen und dokumentiert sind.
+  </p>
+  <p>
+    <a href="https://kolosovskyi.de/">Zurück zum Lebenslauf</a> ·
+    <a href="https://kolosovskyi.de/#kontakt">Kontakt aufnehmen</a>
+  </p>
+  <p class="pflicht">
+    Eigene Berechnung. Quelle der Rohdaten:
+    <a href="https://statistik.arbeitsagentur.de/">Statistik der Bundesagentur für Arbeit</a>.
+    Keine amtliche Statistik.
+  </p>
+</footer>
+
+</main>
+<script src="chart.umd.min.js"></script>
+<script>
+const F = n => getComputedStyle(document.documentElement)
+                 .getPropertyValue(n).trim();
+const de = (v, k) => v.toLocaleString('de-DE',
+  {minimumFractionDigits: k, maximumFractionDigits: k});
+
+const tooltipStil = {
+  backgroundColor: F('--ink'), titleColor: F('--surface'),
+  bodyColor: F('--surface'), padding: 10, boxWidth: 8, boxHeight: 8,
+  cornerRadius: 6, usePointStyle: true
+};
+const basis = {
+  responsive: true, maintainAspectRatio: false,
+  interaction: { mode: 'index', intersect: false }
+};
+
+new Chart(document.getElementById('verlauf'), {
+  type: 'line',
+  data: {
+    labels: ["07/2021", "08/2021", "09/2021", "10/2021", "11/2021", "12/2021", "01/2022", "02/2022", "03/2022", "04/2022", "05/2022", "06/2022", "07/2022", "08/2022", "09/2022", "10/2022", "11/2022", "12/2022", "01/2023", "02/2023", "03/2023", "04/2023", "05/2023", "06/2023", "07/2023", "08/2023", "09/2023", "10/2023", "11/2023", "12/2023", "01/2024", "02/2024", "03/2024", "04/2024", "05/2024", "06/2024", "07/2024", "08/2024", "09/2024", "10/2024", "11/2024", "12/2024", "01/2025", "02/2025", "03/2025", "04/2025", "05/2025", "06/2025", "07/2025", "08/2025", "09/2025", "10/2025", "11/2025", "12/2025", "01/2026", "02/2026", "03/2026", "04/2026", "05/2026", "06/2026", "07/2026"],
+    datasets: [
+      { label: 'Arbeitslose (Ist)', data: [17520, 17320, 16580, 16410, 16230, 16170, 16540, 16310, 15840, 15700, 15500, 15670, 16890, 16650, 16080, 16050, 15880, 15590, 16070, 16050, 16250, 16740, 16370, 16680, 17210, 17100, 16880, 17120, 17190, 16910, 17630, 17720, 17700, 18160, 17890, 18150, 18750, 18880, 18390, 18480, 18290, 18440, 19370, 19240, 19140, 19090, 18880, 18820, 19240, 19250, 18860, 18720, 18530, 18600, 19390, 19300, 19040, 19210, 18860, 18860, 19210],
+        borderColor: F('--serie'), backgroundColor: 'transparent',
+        borderWidth: 2, pointRadius: 0, pointHoverRadius: 4, tension: .25 },
+      { label: 'saisonal erwartet', data: [18619, 18377, 17813, 17482, 17212, 17091, 17738, 17657, 17294, 17086, 16692, 16458, 16625, 16479, 16050, 15839, 15668, 15641, 16300, 16343, 16175, 16217, 16127, 16171, 16581, 16515, 16176, 16070, 16016, 16127, 16974, 17191, 17174, 17303, 17233, 17328, 17801, 17829, 17569, 17507, 17464, 17557, 18488, 18727, 18684, 18813, 18686, 18735, 19168, 19101, 18697, 18537, 18393, 18414, 19265, 19364, 19195, 19196, 18998, 18962, 19346],
+        borderColor: F('--muted'), backgroundColor: 'transparent',
+        borderWidth: 1.5, borderDash: [5, 4], pointRadius: 0,
+        pointHoverRadius: 4, tension: .25 }
+    ]
+  },
+  options: Object.assign({}, basis, {
+    scales: {
+      y: { ticks: { color: F('--muted'), callback: v => de(v, 0) },
+           grid: { color: F('--grid'), drawTicks: false },
+           border: { color: F('--achse') } },
+      x: { ticks: { color: F('--muted'), maxTicksLimit: 11, autoSkip: true },
+           grid: { display: false }, border: { color: F('--achse') } }
+    },
+    plugins: {
+      legend: { labels: { color: F('--ink-2'), boxWidth: 22, boxHeight: 2,
+                          usePointStyle: false } },
+      tooltip: Object.assign({}, tooltipStil, {
+        callbacks: { label: c => c.dataset.label + ': ' + de(c.parsed.y, 0) }
+      })
+    }
+  })
+});
+
+new Chart(document.getElementById('andrang'), {
+  type: 'line',
+  data: {
+    labels: ["01/2007", "02/2007", "03/2007", "04/2007", "05/2007", "06/2007", "07/2007", "08/2007", "09/2007", "10/2007", "11/2007", "12/2007", "01/2008", "02/2008", "03/2008", "04/2008", "05/2008", "06/2008", "07/2008", "08/2008", "09/2008", "10/2008", "11/2008", "12/2008", "01/2009", "02/2009", "03/2009", "04/2009", "05/2009", "06/2009", "07/2009", "08/2009", "09/2009", "10/2009", "11/2009", "12/2009", "01/2010", "02/2010", "03/2010", "04/2010", "05/2010", "06/2010", "07/2010", "08/2010", "09/2010", "10/2010", "11/2010", "12/2010", "01/2011", "02/2011", "03/2011", "04/2011", "05/2011", "06/2011", "07/2011", "08/2011", "09/2011", "10/2011", "11/2011", "12/2011", "01/2012", "02/2012", "03/2012", "04/2012", "05/2012", "06/2012", "07/2012", "08/2012", "09/2012", "10/2012", "11/2012", "12/2012", "01/2013", "02/2013", "03/2013", "04/2013", "05/2013", "06/2013", "07/2013", "08/2013", "09/2013", "10/2013", "11/2013", "12/2013", "01/2014", "02/2014", "03/2014", "04/2014", "05/2014", "06/2014", "07/2014", "08/2014", "09/2014", "10/2014", "11/2014", "12/2014", "01/2015", "02/2015", "03/2015", "04/2015", "05/2015", "06/2015", "07/2015", "08/2015", "09/2015", "10/2015", "11/2015", "12/2015", "01/2016", "02/2016", "03/2016", "04/2016", "05/2016", "06/2016", "07/2016", "08/2016", "09/2016", "10/2016", "11/2016", "12/2016", "01/2017", "02/2017", "03/2017", "04/2017", "05/2017", "06/2017", "07/2017", "08/2017", "09/2017", "10/2017", "11/2017", "12/2017", "01/2018", "02/2018", "03/2018", "04/2018", "05/2018", "06/2018", "07/2018", "08/2018", "09/2018", "10/2018", "11/2018", "12/2018", "01/2019", "02/2019", "03/2019", "04/2019", "05/2019", "06/2019", "07/2019", "08/2019", "09/2019", "10/2019", "11/2019", "12/2019", "01/2020", "02/2020", "03/2020", "04/2020", "05/2020", "06/2020", "07/2020", "08/2020", "09/2020", "10/2020", "11/2020", "12/2020", "01/2021", "02/2021", "03/2021", "04/2021", "05/2021", "06/2021", "07/2021", "08/2021", "09/2021", "10/2021", "11/2021", "12/2021", "01/2022", "02/2022", "03/2022", "04/2022", "05/2022", "06/2022", "07/2022", "08/2022", "09/2022", "10/2022", "11/2022", "12/2022", "01/2023", "02/2023", "03/2023", "04/2023", "05/2023", "06/2023", "07/2023", "08/2023", "09/2023", "10/2023", "11/2023", "12/2023", "01/2024", "02/2024", "03/2024", "04/2024", "05/2024", "06/2024", "07/2024", "08/2024", "09/2024", "10/2024", "11/2024", "12/2024", "01/2025", "02/2025", "03/2025", "04/2025", "05/2025", "06/2025", "07/2025", "08/2025", "09/2025", "10/2025", "11/2025", "12/2025", "01/2026", "02/2026", "03/2026", "04/2026", "05/2026", "06/2026", "07/2026"],
+    datasets: [{
+      label: 'Arbeitslose je gemeldete Stelle', data: [13.58, 13.43, 12.0, 11.01, 9.81, 8.44, 8.65, 8.58, 7.93, 7.44, 7.54, 8.51, 9.01, 8.81, 8.0, 7.7, 8.01, 7.45, 7.69, 7.51, 7.83, 8.55, 8.92, 10.05, 11.38, 12.3, 13.33, 13.98, 13.77, 13.58, 14.0, 14.25, 13.2, 12.64, 12.74, 12.56, 13.24, 12.82, 12.6, 12.57, 10.47, 10.12, 9.09, 9.28, 9.27, 9.11, 8.72, 8.4, 8.69, 7.78, 7.67, 7.47, 7.3, 6.94, 6.64, 6.56, 6.12, 5.93, 5.73, 5.47, 6.01, 6.71, 6.65, 6.59, 6.66, 6.78, 6.59, 6.69, 6.4, 6.73, 7.04, 7.41, 7.76, 7.8, 7.46, 8.28, 8.39, 8.87, 8.75, 8.84, 8.69, 8.56, 8.62, 9.01, 9.83, 9.23, 8.83, 8.4, 8.49, 8.2, 8.19, 7.63, 7.34, 7.34, 7.67, 8.08, 8.42, 7.95, 7.72, 7.73, 7.73, 7.44, 7.33, 7.19, 7.28, 6.79, 6.96, 7.21, 7.75, 7.02, 6.54, 6.3, 6.12, 5.99, 5.54, 5.35, 4.67, 4.38, 4.45, 4.4, 4.74, 4.73, 4.57, 4.24, 4.14, 3.87, 3.77, 3.82, 3.63, 3.7, 3.7, 3.99, 4.49, 4.21, 4.07, 4.08, 3.83, 3.79, 3.76, 3.62, 3.4, 3.51, 3.47, 3.52, 3.84, 3.82, 3.77, 3.67, 3.61, 3.55, 3.61, 3.77, 3.7, 3.9, 4.27, 5.06, 5.84, 5.57, 5.21, 6.06, 7.21, 7.48, 7.73, 7.38, 6.56, 6.22, 6.23, 6.74, 6.76, 6.85, 6.4, 6.31, 5.83, 5.3, 5.02, 4.84, 4.42, 4.91, 5.3, 5.25, 5.51, 5.38, 5.08, 5.08, 5.15, 5.1, 5.38, 5.22, 4.73, 4.71, 4.7, 4.84, 5.04, 5.03, 5.18, 5.56, 5.38, 5.42, 5.36, 5.39, 5.26, 5.25, 5.58, 5.44, 5.67, 5.83, 5.58, 5.92, 5.66, 5.64, 5.82, 5.86, 5.56, 5.58, 5.77, 5.93, 6.41, 6.77, 6.79, 6.65, 6.82, 6.94, 7.26, 7.35, 7.25, 7.31, 7.41, 7.59, 8.22, 8.18, 8.21, 8.5, 8.38, 8.27, 8.11],
+      borderColor: F('--serie'), borderWidth: 2,
+      pointRadius: 0, pointHoverRadius: 4, tension: .25,
+      fill: true,
+      backgroundColor: ctx => {
+        const bereich = ctx.chart.chartArea;
+        if (!bereich) return 'transparent';
+        const g = ctx.chart.ctx.createLinearGradient(0, bereich.top,
+                                                     0, bereich.bottom);
+        g.addColorStop(0, F('--serie') + '2e');
+        g.addColorStop(1, F('--serie') + '00');
+        return g;
+      }
+    }]
+  },
+  options: Object.assign({}, basis, {
+    scales: {
+      y: { beginAtZero: true,
+           ticks: { color: F('--muted'), callback: v => de(v, 0) },
+           grid: { color: F('--grid'), drawTicks: false },
+           border: { color: F('--achse') } },
+      x: { ticks: { color: F('--muted'), maxTicksLimit: 13, autoSkip: true },
+           grid: { display: false }, border: { color: F('--achse') } }
+    },
+    plugins: {
+      legend: { display: false },
+      tooltip: Object.assign({}, tooltipStil, {
+        displayColors: false,
+        callbacks: { label: c => de(c.parsed.y, 1) + ' Arbeitslose je Stelle' }
+      })
+    }
+  })
+});
+</script>
+</body>
+</html>
