@@ -73,6 +73,9 @@ h2 { font-size: 1.2rem; margin: 3.2rem 0 .3rem; letter-spacing: -.015em;
 .arbeitsprobe p { margin: 0 0 .8rem; color: var(--ink-2); }
 .arbeitsprobe p:last-child { margin-bottom: 0; }
 .signatur { font-size: .9rem; }
+.stack { font-size: .85rem; color: var(--muted) !important;
+         border-top: 1px solid var(--rand); padding-top: .9rem;
+         margin-top: 1.1rem !important; }
 .signatur strong { color: var(--ink); }
 
 .flaeche { background: var(--surface); border: 1px solid var(--rand);
@@ -102,6 +105,10 @@ h2 { font-size: 1.2rem; margin: 3.2rem 0 .3rem; letter-spacing: -.015em;
 .paar { margin-top: 1.6rem; display: grid; gap: 1.1rem;
         grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); }
 .paar h3 { font-size: .95rem; margin: 0 0 .3rem; font-weight: 620; }
+.befund h3 { font-size: 1.15rem; margin: .1rem 0 .5rem; }
+.befund-label { font-size: .72rem; letter-spacing: .08em;
+                text-transform: uppercase; color: var(--muted);
+                font-weight: 600; margin: 0 !important; }
 .paar p { margin: 0; color: var(--ink-2); font-size: .93rem; }
 
 .diagramm { background: var(--surface); border: 1px solid var(--rand);
@@ -165,10 +172,11 @@ a { color: var(--serie); text-decoration-thickness: 1px; text-underline-offset: 
   <p class="marke">Regionaler Saison-Abweichungsindex</p>
   <h1>Ist dieser Anstieg normal für die Jahreszeit?</h1>
   <p class="claim">
-    Die Bundesagentur für Arbeit veröffentlicht saisonbereinigte Werte für Bund
-    und Länder – aber nicht für die rund 400 Kreise. Auf lokaler Ebene bleibt
-    damit offen, ob ein Anstieg der Arbeitslosigkeit jahreszeitlich üblich oder
-    auffällig ist. Diese Auswertung schließt genau diese Lücke.
+    Für Bund und Länder gibt es saisonbereinigte Arbeitslosenzahlen aus
+    amtlicher Hand – eine laufende Monatsreihe für alle rund 400 Kreise gehört
+    nicht zur Standardberichterstattung. Auf lokaler Ebene bleibt damit offen,
+    ob ein Anstieg jahreszeitlich üblich oder auffällig ist. Diese Auswertung
+    schließt genau diese Lücke.
   </p>
 </header>
 
@@ -186,13 +194,15 @@ a { color: var(--serie); text-decoration-thickness: 1px; text-underline-offset: 
   <p class="frage">Sind es mehr, als in einem Juli üblich ist?</p>
   <p>
     Genau das rechnet diese Seite aus – für jeden der 53 Kreise in
-    Nordrhein-Westfalen einzeln. Die Bundesagentur für Arbeit macht das nur für ganz
-    Deutschland und für die Bundesländer, nicht für einzelne Kreise.
+    Nordrhein-Westfalen einzeln. Die Bundesagentur für Arbeit weist saisonbereinigte
+    Arbeitslosenzahlen in ihrer laufenden Berichterstattung für Deutschland,
+    West- und Ostdeutschland sowie die Länder aus; eine entsprechende
+    saisonbereinigte Monatsreihe für alle Kreise gehört nicht dazu.
   </p>
 </section>
 
 <section class="arbeitsprobe">
-  <p class="marke">Arbeitsprobe</p>
+  <p class="marke">Arbeitsprobe · Datenanalyse und Reporting</p>
   <p>
     Gebaut habe ich das für eine Frage, die mich selbst betraf: Ist der Anstieg
     in meinem Kreis normal? Die Daten kommen über die Schnittstelle der
@@ -214,18 +224,26 @@ a { color: var(--serie); text-decoration-thickness: 1px; text-underline-offset: 
     statt über sie zu reden.
   </p>
   <p>
-    Ich bewerbe mich in Marketing, Content und angrenzenden Medienberufen.
-    In meinem Zielberuf – Werbung und Marketing – kommen derzeit 9,6 Arbeitslose auf eine gemeldete Stelle, gut das Doppelte des Landesschnitts von 4,9. Wie es in diesen Berufsgruppen insgesamt aussieht, steht weiter
-    unten – nachgerechnet statt geschätzt. Genau deshalb halte ich auch
-    Aufgaben im Blick, bei denen Auswertung und Datenarbeit zum Job gehören.
+    Mein Hintergrund liegt in Marketing und Content. In meinem Zielberuf – Werbung und Marketing – kommen derzeit 9,6 Arbeitslose auf eine gemeldete Stelle, gut das Doppelte des Landesschnitts von 4,9. Wie es in
+    diesen Berufsgruppen insgesamt aussieht, steht weiter unten –
+    nachgerechnet statt geschätzt. Diese Seite zeigt, womit ich darüber
+    hinaus arbeiten kann: Daten beschaffen, prüfen, auswerten und so
+    aufbereiten, dass eine Entscheidung darauf aufbauen kann. Entsprechend
+    bewerbe ich mich auch auf Aufgaben in Analyse, Reporting und
+    Marketing Analytics.
   </p>
   <p>
     Wer wissen will, wie ich arbeite, sieht es hier von Anfang bis Ende:
     Fragestellung, Datenbeschaffung, Prüfung – und die Stellen, an denen das
     Verfahren an seine Grenzen kommt, offen benannt.
   </p>
+  <p class="stack">
+    API der Bundesagentur für Arbeit · PostgreSQL · SQL ·
+    Zeitreihen- und Saisonanalyse · Validierung gegen die amtliche Reihe ·
+    automatisierte monatliche Aktualisierung · Datenvisualisierung
+  </p>
   <p class="signatur">
-    <strong>Pavlo Kolosovskyi</strong> · Marketing &amp; Content ·
+    <strong>Pavlo Kolosovskyi</strong> ·
     <a href="https://kolosovskyi.de/">Lebenslauf</a> ·
     <a href="https://kolosovskyi.de/#kontakt">Kontakt</a>
   </p>
@@ -258,9 +276,9 @@ a { color: var(--serie); text-decoration-thickness: 1px; text-underline-offset: 
     <div class="wert">2.370</div><div class="fuss">Bestand</div></div>
   <div class="kachel"><div class="label">Je Stelle</div>
     <div class="wert">8,1</div><div class="fuss">Arbeitslose</div></div>
-  <div class="kachel"><div class="label">Kombiniert</div>
+  <div class="kachel"><div class="label">Gesamtbild</div>
     <div class="wert hoch">+0,25</div>
-    <div class="fuss">Rang 39 von 53</div></div>
+    <div class="fuss">Platz 39 von 53</div></div>
 </div>
 
 <div class="paar">
@@ -272,11 +290,11 @@ a { color: var(--serie); text-decoration-thickness: 1px; text-underline-offset: 
     mit dem tatsächlichen Wert verglichen.</p>
   </div>
   <div class="flaeche">
-    <h3>Warum noch eine zweite Zahl?</h3>
+    <h3>Was das „Gesamtbild“ bedeutet</h3>
     <p>Arbeitslosenzahlen allein sagen wenig, wenn gleichzeitig die offenen
-    Stellen wegbrechen. Der <em>kombinierte Wert</em> in der Übersicht rechnet
-    beides zusammen: Minus heißt günstig, Plus heißt ungünstig.
-    Beides zusammen ist <strong>ungünstiger</strong> als saisonal üblich – Rang 39 von 53 in Nordrhein-Westfalen.</p>
+    Stellen wegbrechen. Das Gesamtbild fasst beides zu einer Zahl zusammen.
+    Gemessen wird in <strong>üblichen Schwankungen dieses Kreises</strong>:
+    +0,25 heißt eine knappe Viertel- bis halbe Schwankung <strong>ungünstiger</strong> als sonst. Null hieße: völlig unauffällig. Beides zusammen ist <strong>ungünstiger</strong> als saisonal üblich – Rang 39 von 53 in Nordrhein-Westfalen.</p>
   </div>
 </div>
 
@@ -334,6 +352,15 @@ im September 2018 – heute <strong>8,1</strong>.</p>
   nicht den gesamten Arbeitskräftebedarf.
 </p>
 
+<h2>Was die Daten zeigen</h2>
+<p class="unter">Drei Befunde aus dem aktuellen Monat – automatisch aus der
+Tabelle abgeleitet, nicht von Hand ausgewählt.</p>
+<div class="paar">
+    <div class="flaeche befund"><p class="befund-label">Stärkste Lage</p><h3>Coesfeld</h3><p>-7,4 % gegenüber dem, was in einem Juli üblich ist – der niedrigste Wert in Nordrhein-Westfalen.</p></div>
+    <div class="flaeche befund"><p class="befund-label">Auffälligster Stellenmarkt</p><h3>Köln, Stadt</h3><p>+69,2 % gemeldete Stellen gegenüber dem saisonüblichen Stand. Bei der Arbeitslosigkeit allein (-1,9 %) wäre das nicht aufgefallen.</p></div>
+    <div class="flaeche befund"><p class="befund-label">Schwächste Entwicklung</p><h3>Lippe</h3><p>+3,2 % – hier liegt die Arbeitslosigkeit am deutlichsten über dem, was die Jahreszeit erklärt.</p></div>
+</div>
+
 <h2>Alle 53 Kreise in Nordrhein-Westfalen</h2>
 <p class="unter">Sortiert nach RSA, günstigster Wert zuerst. Der Balken zeigt die
 Abweichung nach links (unter der Erwartung) oder nach rechts (darüber).</p>
@@ -343,7 +370,7 @@ Abweichung nach links (unter der Erwartung) oder nach rechts (darüber).</p>
     <th class="r">Rang</th><th>Kreis</th><th>Abweichung</th><th class="r">RSA</th>
     <th class="r">Ist</th><th class="r">Erwartung</th>
     <th class="r">Stellen</th><th class="r">je Stelle</th>
-    <th class="r">RSA Stellen</th><th class="r">kombiniert</th>
+    <th class="r">RSA Stellen</th><th class="r">Gesamtbild</th>
   </tr></thead>
   <tbody>
     <tr><td class="r">1</td><td>Coesfeld</td><td class="balken"><span class="spur"><i style="left:0.0%;width:50.0%;background:var(--pol-tief)"></i></span></td><td class="r tief">-7,4 %</td><td class="r">5.000</td><td class="r">5.400</td><td class="r">1.470</td><td class="r">3,4</td><td class="r">-9,0 %</td><td class="r tief">-0,33</td></tr>
@@ -458,7 +485,7 @@ der Landesarbeitsmarkt insgesamt (4,9 Arbeitslose je Stelle).</p>
   <p>
     Berichtsmonat Juli 2026 ·
     Datenstand der BA Juli 2026 ·
-    Seite erzeugt am 19.08.2026
+    Seite erzeugt am 20.08.2026
   </p>
   <p>
     <a href="https://statistik.arbeitsagentur.de/DE/Navigation/Grundlagen/Methodik-Qualitaet/Saisonbereinigung/Saisonbereinigte-Daten-Nav.html">Methodik der Saisonbereinigung bei der BA</a> ·
