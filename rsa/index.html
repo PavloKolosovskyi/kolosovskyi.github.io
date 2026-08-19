@@ -57,6 +57,15 @@ h2 { font-size: 1.2rem; margin: 3.2rem 0 .3rem; letter-spacing: -.015em;
      font-weight: 620; }
 .unter { color: var(--ink-2); margin: .35rem 0 1.1rem; max-width: 46rem; }
 
+.einfach { margin-top: 2.4rem; max-width: 46rem; }
+.einfach h2 { margin-top: 0; }
+.einfach p { color: var(--ink-2); margin: 0 0 .9rem; }
+.frage { font-size: 1.15rem; font-weight: 620; color: var(--ink) !important;
+         border-left: 3px solid var(--serie); padding: .2rem 0 .2rem 1rem;
+         margin: 1.2rem 0 !important; }
+.klartext { font-size: 1.08rem; color: var(--ink) !important;
+            margin: 0 0 .7rem !important; }
+
 .arbeitsprobe { margin-top: 2.4rem; background: var(--surface);
                border: 1px solid var(--rand); border-left: 3px solid var(--serie);
                border-radius: 12px; padding: 1.4rem 1.6rem; max-width: 46rem; }
@@ -144,6 +153,8 @@ footer { margin-top: 3.5rem; padding-top: 1.4rem; border-top: 1px solid var(--ra
 footer p { margin: .45rem 0; }
 a { color: var(--serie); text-decoration-thickness: 1px; text-underline-offset: 2px; }
 .pflicht { color: var(--ink); font-weight: 600; }
+.rechtliches { margin-top: 1rem; padding-top: 1rem;
+               border-top: 1px solid var(--rand); }
 .fussnote { color: var(--muted); font-size: .85rem; max-width: 46rem; }
 </style>
 </head>
@@ -160,6 +171,25 @@ a { color: var(--serie); text-decoration-thickness: 1px; text-underline-offset: 
     auffällig ist. Diese Auswertung schließt genau diese Lücke.
   </p>
 </header>
+
+<section class="einfach">
+  <h2>Kurz erklärt</h2>
+  <p>
+    Im Winter gibt es immer mehr Arbeitslose als im Sommer. Auf dem Bau ruht
+    die Arbeit, Saisonjobs enden. Im Frühjahr sinken die Zahlen wieder. Das
+    passiert jedes Jahr – und sagt für sich genommen noch nichts.
+  </p>
+  <p>
+    Die wichtige Frage ist deshalb nicht „Sind es mehr als letzten Monat?“,
+    sondern:
+  </p>
+  <p class="frage">Sind es mehr, als in einem Juli üblich ist?</p>
+  <p>
+    Genau das rechnet diese Seite aus – für jeden der 53 Kreise in
+    Nordrhein-Westfalen einzeln. Die Bundesagentur für Arbeit macht das nur für ganz
+    Deutschland und für die Bundesländer, nicht für einzelne Kreise.
+  </p>
+</section>
 
 <section class="arbeitsprobe">
   <p class="marke">Arbeitsprobe</p>
@@ -203,16 +233,18 @@ a { color: var(--serie); text-decoration-thickness: 1px; text-underline-offset: 
 
 <section class="held">
   <div>
-    <div class="marke2">RSA · Kreis Mettmann</div>
+    <div class="marke2">Abweichung vom Üblichen · Kreis Mettmann</div>
     <div class="zahl tief">-0,7 %</div>
   </div>
-  <p>
-    Im Juli 2026 liegt die Arbeitslosigkeit im Kreis
-    Mettmann <strong>unter</strong> dem saisonal üblichen Niveau
-    der letzten zwölf Monate. Gemeldet sind <strong>19.210</strong>
-    Arbeitslose, saisonal zu erwarten wären <strong>19.346</strong>.
-    Unter den 53 Kreisen in Nordrhein-Westfalen ist das Rang <strong>25</strong>.
-  </p>
+  <div>
+    <p class="klartext">0,7 Prozent <strong>weniger</strong> Arbeitslose, als in einem Juli normal wäre. Ein Minus ist gut.</p>
+    <p>
+      Gemeldet sind <strong>19.210</strong> Arbeitslose. Normal wären für
+      einen Juli in diesem Kreis <strong>19.346</strong>.
+      Unter den 53 Kreisen in Nordrhein-Westfalen steht Kreis Mettmann
+      damit auf <strong>Platz 25</strong> – genau im Mittelfeld.
+    </p>
+  </div>
 </section>
 
 <div class="kacheln">
@@ -233,16 +265,40 @@ a { color: var(--serie); text-decoration-thickness: 1px; text-underline-offset: 
 
 <div class="paar">
   <div class="flaeche">
-    <h3>Wie der RSA zu lesen ist</h3>
-    <p>Um wie viel Prozent der saisonbereinigte Wert über oder unter dem eigenen
-    Niveau der letzten zwölf Monate liegt. Ein negativer Wert ist günstig. Null
-    heißt: genau so, wie es die Jahreszeit erwarten lässt.</p>
+    <h3>Woher der Vergleichswert kommt</h3>
+    <p>Für jeden Monat wird aus den letzten 19 Jahren berechnet, wie stark er
+    üblicherweise über oder unter dem Jahresschnitt liegt. Ein Juli ist anders
+    als ein Januar. Dieser Erfahrungswert ergibt die Erwartung – und die wird
+    mit dem tatsächlichen Wert verglichen.</p>
   </div>
   <div class="flaeche">
-    <h3>Was der kombinierte Index ergänzt</h3>
-    <p>Beides zusammen ist <strong>ungünstiger</strong> als saisonal üblich – Rang 39 von 53 in Nordrhein-Westfalen. Er wertet Arbeitslosigkeit und gemeldete Stellen zusammen aus,
-    jede Reihe zuvor an ihrer eigenen Streuung normiert. Einheit sind
-    Standardabweichungen, nicht Prozent.</p>
+    <h3>Warum noch eine zweite Zahl?</h3>
+    <p>Arbeitslosenzahlen allein sagen wenig, wenn gleichzeitig die offenen
+    Stellen wegbrechen. Der <em>kombinierte Wert</em> in der Übersicht rechnet
+    beides zusammen: Minus heißt günstig, Plus heißt ungünstig.
+    Beides zusammen ist <strong>ungünstiger</strong> als saisonal üblich – Rang 39 von 53 in Nordrhein-Westfalen.</p>
+  </div>
+</div>
+
+<h2>Was bringt mir diese Zahl?</h2>
+<div class="paar">
+  <div class="flaeche">
+    <h3>Wenn Sie Arbeit suchen</h3>
+    <p>Sie sehen, ob es gerade an Ihrem Wohnort schwerer ist als sonst – oder
+    ob es einfach die Jahreszeit ist. Und Sie sehen unten, wie viele Menschen
+    sich rechnerisch auf eine gemeldete Stelle bewerben.</p>
+  </div>
+  <div class="flaeche">
+    <h3>Wenn Sie einstellen</h3>
+    <p>Sie sehen, ob sich der Arbeitsmarkt in Ihrer Region bewegt, bevor es
+    in der Zeitung steht – und wie Ihr Kreis im Vergleich zu den anderen
+    53 dasteht.</p>
+  </div>
+  <div class="flaeche">
+    <h3>Wenn Sie vergleichen wollen</h3>
+    <p>Die Tabelle weiter unten stellt alle 53 Kreise nebeneinander.
+    Ein Kreis kann viele Arbeitslose haben und trotzdem gut dastehen, wenn
+    das für ihn normal ist – und umgekehrt.</p>
   </div>
 </div>
 
@@ -418,6 +474,10 @@ der Landesarbeitsmarkt insgesamt (4,9 Arbeitslose je Stelle).</p>
     <a href="https://statistik.arbeitsagentur.de/">Statistik der Bundesagentur für Arbeit</a>.
     Keine amtliche Statistik.
   </p>
+  <p class="rechtliches">
+    <a href="../impressum.html">Impressum</a> ·
+    <a href="../datenschutz.html">Datenschutzerklärung</a>
+  </p>
 </footer>
 
 </main>
@@ -454,10 +514,14 @@ new Chart(document.getElementById('verlauf'), {
   },
   options: Object.assign({}, basis, {
     scales: {
-      y: { ticks: { color: F('--muted'), callback: v => de(v, 0) },
+      y: { title: { display: true, text: 'Arbeitslose (Personen)',
+                    color: F('--ink-2'), font: { size: 12, weight: '600' } },
+           ticks: { color: F('--muted'), callback: v => de(v, 0) },
            grid: { color: F('--grid'), drawTicks: false },
            border: { color: F('--achse') } },
-      x: { ticks: { color: F('--muted'), maxTicksLimit: 11, autoSkip: true },
+      x: { title: { display: true, text: 'Monat',
+                    color: F('--ink-2'), font: { size: 12, weight: '600' } },
+           ticks: { color: F('--muted'), maxTicksLimit: 11, autoSkip: true },
            grid: { display: false }, border: { color: F('--achse') } }
     },
     plugins: {
@@ -493,10 +557,14 @@ new Chart(document.getElementById('andrang'), {
   options: Object.assign({}, basis, {
     scales: {
       y: { beginAtZero: true,
+           title: { display: true, text: 'Arbeitslose je gemeldete Stelle',
+                    color: F('--ink-2'), font: { size: 12, weight: '600' } },
            ticks: { color: F('--muted'), callback: v => de(v, 0) },
            grid: { color: F('--grid'), drawTicks: false },
            border: { color: F('--achse') } },
-      x: { ticks: { color: F('--muted'), maxTicksLimit: 13, autoSkip: true },
+      x: { title: { display: true, text: 'Monat',
+                    color: F('--ink-2'), font: { size: 12, weight: '600' } },
+           ticks: { color: F('--muted'), maxTicksLimit: 13, autoSkip: true },
            grid: { display: false }, border: { color: F('--achse') } }
     },
     plugins: {
