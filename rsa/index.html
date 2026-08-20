@@ -6,173 +6,157 @@
 <title>RSA – Regionaler Saison-Abweichungsindex · Kreis Mettmann</title>
 <meta name="description" content="Saisonbereinigte Betrachtung des Arbeitsmarktes auf Kreisebene. Eigene Berechnung auf Grundlage der Statistik der Bundesagentur für Arbeit.">
 <style>
+/* Farben und Typografie von kolosovskyi.de uebernommen. Die Seite ist
+   bewusst nur hell - der Hauptauftritt kennt keinen Dunkelmodus, und ein
+   abweichender Unterbau waere als Fremdkoerper zu sehen.
+   Die beiden Datenfarben sind aus dem Navy der Marke abgeleitet und mit
+   dem Palettenpruefer gegen den Papierton geprueft: CVD dE 18.2,
+   Normalsicht 27.2, Kontrast ueber 3:1. Das Gold der Marke faellt als
+   Datenfarbe durch (Saettigung zu niedrig, liest sich grau) und bleibt
+   deshalb Akzent fuer Text und Linien. */
 :root {
   color-scheme: light;
-  --plane:      #f9f9f7;
-  --surface:    #fcfcfb;
-  --ink:        #0b0b0b;
-  --ink-2:      #52514e;
-  --muted:      #898781;
-  --grid:       #e1e0d9;
-  --achse:      #c3c2b7;
-  --rand:       rgba(11,11,11,.10);
-  --serie:      #2a78d6;
-  --pol-hoch:   #e34948;
-  --pol-tief:   #2a78d6;
-  --mitte:      #f0efec;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    color-scheme: dark;
-    --plane:    #0d0d0d;
-    --surface:  #1a1a19;
-    --ink:      #ffffff;
-    --ink-2:    #c3c2b7;
-    --muted:    #898781;
-    --grid:     #2c2c2a;
-    --achse:    #383835;
-    --rand:     rgba(255,255,255,.10);
-    --serie:    #3987e5;
-    --pol-hoch: #e66767;
-    --pol-tief: #3987e5;
-    --mitte:    #383835;
-  }
+  --navy: #0d2845;
+  --navy-deep: #06192d;
+  --gold: #dcae52;
+  --gold-ink: #856419;
+  --gold-soft: #f3d99d;
+  --cream: #f5f1e8;
+  --paper: #fbfaf7;
+  --shell: #f0ece3;
+  --ink: #14263a;
+  --muted: #667586;
+  --rand: rgba(20, 38, 58, .13);
+  --serie: #1d5a94;
+  --pol-hoch: #b8451f;
+  --pol-tief: #1d5a94;
+  --mitte: #e6e1d6;
+  --grid: #e2ded2;
+  --achse: #c7c1b2;
 }
 * { box-sizing: border-box; }
 body {
-  margin: 0; padding: 0 1.25rem 5rem; background: var(--plane); color: var(--ink);
-  font: 16px/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  -webkit-font-smoothing: antialiased;
+  background: var(--paper); color: var(--ink); margin: 0;
+  font-family: Arial, Helvetica, sans-serif; line-height: 1.55;
 }
-main { max-width: 62rem; margin: 0 auto; }
+main { max-width: 1180px; margin: 0 auto; padding: 0 24px 90px; }
+a { color: var(--gold-ink); }
 
-header { padding: 3.5rem 0 2.4rem; border-bottom: 1px solid var(--rand); }
-h1 { font-size: clamp(1.7rem, 4vw, 2.3rem); line-height: 1.15; margin: 0 0 .6rem;
-     letter-spacing: -.022em; font-weight: 650; }
-.claim { color: var(--ink-2); font-size: 1.05rem; max-width: 46rem; margin: 0; }
-.marke { font-size: .74rem; letter-spacing: .1em; text-transform: uppercase;
-         color: var(--muted); margin: 0 0 .9rem; font-weight: 600; }
+.label {
+  color: var(--gold-ink); font-size: 12px; font-weight: 800;
+  letter-spacing: .16em; text-transform: uppercase;
+}
+.label.hell { color: var(--gold-soft); }
 
-h2 { font-size: 1.2rem; margin: 3.2rem 0 .3rem; letter-spacing: -.015em;
-     font-weight: 620; }
-.unter { color: var(--ink-2); margin: .35rem 0 1.1rem; max-width: 46rem; }
+h1 { font-size: clamp(40px, 5.4vw, 74px); letter-spacing: -.04em;
+     line-height: 1.02; margin: 14px 0 0; font-weight: 700; }
+h2 { font-size: clamp(28px, 3.2vw, 44px); letter-spacing: -.03em;
+     line-height: 1.08; margin: 78px 0 6px; font-weight: 700; }
+h3 { font-size: 19px; margin: 0 0 6px; letter-spacing: -.01em; }
+.unter { color: var(--muted); margin: 10px 0 26px; max-width: 720px; }
+p { margin: 0 0 14px; }
 
-.einfach { margin-top: 2.4rem; max-width: 46rem; }
-.einfach h2 { margin-top: 0; }
-.einfach p { color: var(--ink-2); margin: 0 0 .9rem; }
-.frage { font-size: 1.15rem; font-weight: 620; color: var(--ink) !important;
-         border-left: 3px solid var(--serie); padding: .2rem 0 .2rem 1rem;
-         margin: 1.2rem 0 !important; }
-.klartext { font-size: 1.08rem; color: var(--ink) !important;
-            margin: 0 0 .7rem !important; }
+header { padding: 70px 0 46px; border-bottom: 1px solid var(--rand); }
+.claim { font-size: clamp(17px, 1.3vw, 20px); color: var(--ink);
+         max-width: 760px; margin-top: 22px; }
 
-.arbeitsprobe { margin-top: 2.4rem; background: var(--surface);
-               border: 1px solid var(--rand); border-left: 3px solid var(--serie);
-               border-radius: 12px; padding: 1.4rem 1.6rem; max-width: 46rem; }
-.arbeitsprobe .marke { margin-bottom: .6rem; }
-.arbeitsprobe p { margin: 0 0 .8rem; color: var(--ink-2); }
-.arbeitsprobe p:last-child { margin-bottom: 0; }
-.signatur { font-size: .9rem; }
-.stack { font-size: .85rem; color: var(--muted) !important;
-         border-top: 1px solid var(--rand); padding-top: .9rem;
-         margin-top: 1.1rem !important; }
-.signatur strong { color: var(--ink); }
+.flaeche { background: #fff; border: 1px solid var(--rand); padding: 26px 28px; }
+.paar { display: grid; gap: 20px; margin-top: 26px;
+        grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); }
+.paar p { color: var(--muted); font-size: 15px; margin: 0; }
 
-.flaeche { background: var(--surface); border: 1px solid var(--rand);
-           border-radius: 12px; padding: 1.3rem 1.4rem; }
+/* Dunkler Block in der Bildsprache der Projektsektion */
+.dunkel { background: var(--navy); color: #fff; margin: 46px 0 0;
+          padding: 42px 46px; }
+.dunkel h2, .dunkel h3 { color: #fff; margin-top: 0; }
+.dunkel p { color: #c5d0dc; max-width: 780px; }
+.dunkel a { color: var(--gold-soft); }
+.dunkel .trenner { border-top: 1px solid rgba(220,174,82,.24);
+                   margin-top: 22px; padding-top: 18px; }
+@media (max-width: 640px) { .dunkel { padding: 28px 22px; } }
 
-.held { margin-top: 2.4rem; display: grid; gap: 2rem;
-        grid-template-columns: minmax(0,auto) minmax(0,1fr); align-items: center; }
-@media (max-width: 46rem) { .held { grid-template-columns: 1fr; gap: 1.2rem; } }
-.held .zahl { font-size: clamp(3.2rem, 10vw, 4.6rem); line-height: .95;
-              font-weight: 660; letter-spacing: -.04em; }
-.held .marke2 { font-size: .74rem; letter-spacing: .1em; text-transform: uppercase;
-                color: var(--muted); font-weight: 600; margin-bottom: .5rem; }
-.held p { margin: 0; color: var(--ink-2); }
+.held { margin-top: 46px; display: grid; gap: 34px; align-items: center;
+        grid-template-columns: minmax(0,auto) minmax(0,1fr); }
+@media (max-width: 780px) { .held { grid-template-columns: 1fr; gap: 18px; } }
+.held .zahl { font-size: clamp(58px, 9vw, 96px); line-height: .92;
+              letter-spacing: -.05em; font-weight: 700; }
+.klartext { font-size: 19px; color: var(--ink); margin-bottom: 10px; }
 .hoch { color: var(--pol-hoch); }
 .tief { color: var(--pol-tief); }
 
-.kacheln { display: grid; gap: 1px; background: var(--rand); margin-top: 1.7rem;
-           border: 1px solid var(--rand); border-radius: 12px; overflow: hidden;
+.kacheln { display: grid; gap: 1px; background: var(--rand); margin-top: 32px;
+           border: 1px solid var(--rand);
            grid-template-columns: repeat(auto-fit, minmax(10.5rem, 1fr)); }
-.kachel { background: var(--surface); padding: 1rem 1.1rem 1.1rem; }
-.kachel .label { font-size: .73rem; letter-spacing: .07em; text-transform: uppercase;
-                 color: var(--muted); font-weight: 600; }
-.kachel .wert { font-size: 1.55rem; font-weight: 620; letter-spacing: -.02em;
-                margin-top: .15rem; }
-.kachel .fuss { font-size: .82rem; color: var(--muted); }
+.kachel { background: #fff; padding: 18px 20px 20px; }
+.kachel .k-label { color: var(--muted); font-size: 11px; font-weight: 700;
+                   letter-spacing: .12em; text-transform: uppercase; }
+.kachel .wert { font-size: 27px; font-weight: 700; letter-spacing: -.02em;
+                margin-top: 4px; }
+.kachel .fuss { color: var(--muted); font-size: 13px; }
 
-.paar { margin-top: 1.6rem; display: grid; gap: 1.1rem;
-        grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); }
-.paar h3 { font-size: .95rem; margin: 0 0 .3rem; font-weight: 620; }
-.befund h3 { font-size: 1.15rem; margin: .1rem 0 .5rem; }
-sup.flag { color: var(--pol-hoch); font-weight: 700; cursor: help; }
-.unter-tabelle { font-size: 1.05rem; margin: 2.6rem 0 .2rem;
-                 font-weight: 620; }
-.befund-label { font-size: .72rem; letter-spacing: .08em;
-                text-transform: uppercase; color: var(--muted);
-                font-weight: 600; margin: 0 !important; }
-.paar p { margin: 0; color: var(--ink-2); font-size: .93rem; }
+.frage { font-size: 21px; font-weight: 700; letter-spacing: -.01em;
+         border-left: 3px solid var(--gold); padding: 4px 0 4px 18px;
+         margin: 22px 0; }
 
-.diagramm { background: var(--surface); border: 1px solid var(--rand);
-            border-radius: 12px; padding: 1.3rem 1.2rem 1rem; }
+.diagramm { background: #fff; border: 1px solid var(--rand); padding: 22px; }
 .dia-kopf { display: flex; justify-content: space-between; align-items: baseline;
-            gap: 1rem; margin-bottom: .9rem; flex-wrap: wrap; }
-.dia-kopf .titel { font-weight: 600; font-size: .95rem; }
-.dia-kopf .notiz { color: var(--muted); font-size: .85rem; }
-/* Chart.js verlangt einen Elternknoten, der NUR dem Canvas gehoert. Steht
-   noch etwas anderes darin - hier der Diagrammkopf -, misst es die Breite
-   als 0 und zeichnet nichts. Deshalb diese eigene Flaeche mit fester Hoehe. */
-.dia-flaeche { position: relative; width: 100%; height: 320px; }
-.dia-flaeche.flach { height: 260px; }
-@media (max-width: 46rem) {
-  .dia-flaeche { height: 260px; }
-  .dia-flaeche.flach { height: 220px; }
+            gap: 16px; margin-bottom: 14px; flex-wrap: wrap; }
+.dia-kopf .titel { font-weight: 700; }
+.dia-kopf .notiz { color: var(--muted); font-size: 13px; }
+.dia-flaeche { position: relative; width: 100%; height: 340px; }
+.dia-flaeche.flach { height: 270px; }
+@media (max-width: 640px) {
+  .dia-flaeche { height: 260px; } .dia-flaeche.flach { height: 220px; }
 }
 
-/* Beide Achsen scrollen im Container, nicht in der Seite. Die Hoehenkappe
-   ist es, die den klebenden Tabellenkopf ueberhaupt sinnvoll macht - ohne
-   sie gaebe es im Container nichts, woran er kleben koennte. */
 .scroll { overflow: auto; max-height: 34rem; border: 1px solid var(--rand);
-          border-radius: 12px; background: var(--surface);
-          overscroll-behavior: contain; }
-table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums;
-        font-size: .92rem; }
-th, td { padding: .5rem .7rem; text-align: left; white-space: nowrap;
+          background: #fff; overscroll-behavior: contain; }
+table { border-collapse: collapse; width: 100%; font-size: 14px;
+        font-variant-numeric: tabular-nums; }
+th, td { padding: 9px 12px; text-align: left; white-space: nowrap;
          border-bottom: 1px solid var(--grid); }
-thead th { font-size: .72rem; text-transform: uppercase; letter-spacing: .06em;
-           color: var(--muted); font-weight: 600; position: sticky; top: 0;
-           background: var(--surface); border-bottom: 1px solid var(--achse); }
+thead th { background: var(--shell); color: var(--gold-ink); font-size: 11px;
+           font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+           position: sticky; top: 0; border-bottom: 1px solid var(--achse); }
 tbody tr:last-child td { border-bottom: 0; }
 td.r, th.r { text-align: right; }
-tr.hier td { font-weight: 650; }
-tr.hier td:first-child { box-shadow: inset 3px 0 0 var(--serie); }
+tr.hier td { background: var(--cream); font-weight: 700; }
+tr.hier td:first-child { box-shadow: inset 3px 0 0 var(--gold); }
+td.kldb { color: var(--muted); width: 3.5rem; }
+td.balken { width: 8.5rem; padding-right: 16px; }
+.spur { position: relative; display: block; height: 9px;
+        background: var(--mitte); }
+.spur::after { content: ""; position: absolute; left: 50%; top: -2px;
+               bottom: -2px; width: 1px; background: var(--achse); }
+.spur i { position: absolute; top: 0; height: 9px; display: block; }
+sup.flag { color: var(--pol-hoch); font-weight: 700; cursor: help; }
 
-td.balken { width: 8.5rem; padding-right: 1rem; }
-td.kldb { color: var(--muted); font-variant-numeric: tabular-nums;
-          width: 3.5rem; }
-span.hoch, span.tief { font-weight: 600; }
-.spur { position: relative; display: block; height: 9px; background: var(--mitte);
-        border-radius: 2px; }
-.spur::after { content: ""; position: absolute; left: 50%; top: -2px; bottom: -2px;
-               width: 1px; background: var(--achse); }
-.spur i { position: absolute; top: 0; height: 9px; border-radius: 2px; display: block; }
+.stack { font-size: 13px; letter-spacing: .01em; }
+.fussnote { color: var(--muted); font-size: 13px; max-width: 780px; }
+.unter-tabelle { font-size: 21px; margin: 44px 0 4px; letter-spacing: -.02em; }
+.befund h3 { font-size: 22px; margin: 4px 0 8px; letter-spacing: -.02em; }
+.befund-label { color: var(--gold-ink); font-size: 11px; font-weight: 800;
+                letter-spacing: .12em; text-transform: uppercase;
+                margin: 0 !important; }
 
-footer { margin-top: 3.5rem; padding-top: 1.4rem; border-top: 1px solid var(--rand);
-         color: var(--ink-2); font-size: .88rem; }
-footer p { margin: .45rem 0; }
-a { color: var(--serie); text-decoration-thickness: 1px; text-underline-offset: 2px; }
-.pflicht { color: var(--ink); font-weight: 600; }
-.rechtliches { margin-top: 1rem; padding-top: 1rem;
+.knopf { display: inline-block; background: var(--gold); color: var(--navy-deep);
+         font-weight: 700; text-decoration: none; padding: 13px 22px;
+         letter-spacing: .02em; }
+.knopf:hover { background: var(--gold-soft); }
+
+footer { margin-top: 70px; padding-top: 26px; border-top: 1px solid var(--rand);
+         color: var(--muted); font-size: 14px; }
+footer p { margin: 8px 0; }
+.pflicht { color: var(--ink); font-weight: 700; }
+.rechtliches { margin-top: 18px; padding-top: 16px;
                border-top: 1px solid var(--rand); }
-.fussnote { color: var(--muted); font-size: .85rem; max-width: 46rem; }
 </style>
 </head>
 <body>
 <main>
 
 <header>
-  <p class="marke">Regionaler Saison-Abweichungsindex</p>
+  <p class="label">Regionaler Saison-Abweichungsindex</p>
   <h1>Ist dieser Anstieg normal für die Jahreszeit?</h1>
   <p class="claim">
     Für Bund und Länder gibt es saisonbereinigte Arbeitslosenzahlen aus
@@ -183,7 +167,7 @@ a { color: var(--serie); text-decoration-thickness: 1px; text-underline-offset: 
   </p>
 </header>
 
-<section class="einfach">
+<section class="einfach flaeche">
   <h2>Kurz erklärt</h2>
   <p>
     Im Winter gibt es immer mehr Arbeitslose als im Sommer. Auf dem Bau ruht
@@ -204,8 +188,8 @@ a { color: var(--serie); text-decoration-thickness: 1px; text-underline-offset: 
   </p>
 </section>
 
-<section class="arbeitsprobe">
-  <p class="marke">Arbeitsprobe · Datenanalyse und Reporting</p>
+<section class="dunkel">
+  <p class="label hell">Arbeitsprobe · Datenanalyse und Reporting</p>
   <p>
     Gebaut habe ich das für eine Frage, die mich selbst betraf: Ist der Anstieg
     in meinem Kreis normal? Die Daten kommen über die Schnittstelle der
@@ -241,7 +225,7 @@ a { color: var(--serie); text-decoration-thickness: 1px; text-underline-offset: 
     Fragestellung, Datenbeschaffung, Prüfung – und die Stellen, an denen das
     Verfahren an seine Grenzen kommt, offen benannt.
   </p>
-  <p class="stack">
+  <p class="stack trenner">
     API der Bundesagentur für Arbeit · PostgreSQL · SQL ·
     Zeitreihen- und Saisonanalyse · Validierung gegen die amtliche Reihe ·
     automatisierte monatliche Aktualisierung · Datenvisualisierung
@@ -255,7 +239,7 @@ a { color: var(--serie); text-decoration-thickness: 1px; text-underline-offset: 
 
 <section class="held">
   <div>
-    <div class="marke2">Abweichung vom Üblichen · Kreis Mettmann</div>
+    <div class="label">Abweichung vom Üblichen · Kreis Mettmann</div>
     <div class="zahl tief">-0,7 %</div>
   </div>
   <div>
@@ -270,17 +254,17 @@ a { color: var(--serie); text-decoration-thickness: 1px; text-underline-offset: 
 </section>
 
 <div class="kacheln">
-  <div class="kachel"><div class="label">Arbeitslose</div>
+  <div class="kachel"><div class="k-label">Arbeitslose</div>
     <div class="wert">19.210</div><div class="fuss">gemeldet</div></div>
-  <div class="kachel"><div class="label">Erwartung</div>
+  <div class="kachel"><div class="k-label">Erwartung</div>
     <div class="wert">19.346</div><div class="fuss">saisonal üblich</div></div>
-  <div class="kachel"><div class="label">z. Vormonat</div>
+  <div class="kachel"><div class="k-label">z. Vormonat</div>
     <div class="wert">-0,1 %</div><div class="fuss">saisonbereinigt</div></div>
-  <div class="kachel"><div class="label">Gem. Stellen</div>
+  <div class="kachel"><div class="k-label">Gem. Stellen</div>
     <div class="wert">2.370</div><div class="fuss">Bestand</div></div>
-  <div class="kachel"><div class="label">Je Stelle</div>
+  <div class="kachel"><div class="k-label">Je Stelle</div>
     <div class="wert">8,1</div><div class="fuss">Arbeitslose</div></div>
-  <div class="kachel"><div class="label">Gesamtbild</div>
+  <div class="kachel"><div class="k-label">Gesamtbild</div>
     <div class="wert hoch">+0,25</div>
     <div class="fuss">Platz 39 von 53</div></div>
 </div>
@@ -435,6 +419,43 @@ Abweichung nach links (unter der Erwartung) oder nach rechts (darüber).</p>
 </div>
 
 <p class="fussnote" style="margin-top:.9rem"><strong>*</strong> Bei Köln, Stadt ist der gemeldete Stellenbestand gegenüber dem Vorjahr weit stärker gestiegen, als der Zugang neuer Stellen es hergibt. Ein Bestand kann nur über Zugänge wachsen – solche Sprünge deuten auf eine Änderung in der Zählung hin, nicht auf den Arbeitsmarkt. Die Zahl steht so in den amtlichen Daten und wird hier unverändert gezeigt, aber aus den Befunden oben herausgehalten.</p>
+
+<section class="dunkel">
+  <p class="label hell">Nebenbefund</p>
+  <h2>Ein Fehler in den Daten – auch das ist ein Ergebnis</h2>
+  <p>
+    Beim Rechnen fiel eine Zahl auf, die nicht sein kann.
+    Köln, Stadt meldet für Juli einen Bestand an
+    offenen Stellen, der weit über allem liegt, was dieser Kreis in den
+    Jahren davor je gemeldet hat – im Vorjahresmonat war es ein Bruchteil
+    davon, und alle vergleichbaren Städte stehen unverändert da.
+  </p>
+  <p>
+    Zuerst habe ich die eigene Kette geprüft: Die Zahl kommt genau so von
+    der Bundesagentur, der Fehler liegt nicht im Einlesen. Entscheidend war
+    dann der <em>Zugang</em> neuer Stellen – der liegt völlig im Rahmen der
+    Vorjahre. Ein Bestand kann aber nur über Zugänge wachsen. Vervielfacht
+    er sich bei unverändertem Zulauf, ist das keine Bewegung am
+    Arbeitsmarkt, sondern eine Änderung in der Zählung.
+  </p>
+  <p>
+    Daraus wurde eine Regel statt einer Ausnahmeliste: Auffällig ist ein
+    Wert, wenn der Bestand gegenüber dem Vorjahr stark steigt <em>und</em>
+    dabei deutlich stärker als der Zugang. Gegengeprüft an denselben Daten
+    lässt die Regel Kreise stehen, in denen sich wirklich etwas bewegt, und
+    greift nur dort, wo sich die Zahlen widersprechen.
+  </p>
+  <p class="trenner">
+    Der Wert bleibt in der Tabelle stehen und ist mit
+    <strong style="color:var(--gold)">*</strong> markiert – amtliche Zahlen
+    werden hier nicht stillschweigend korrigiert. Aus den Befunden oben
+    ist er herausgenommen, denn sonst stünde dort ein Zählfehler als
+    Erkenntnis. <strong>Genau das ist der Unterschied zwischen einem
+    Schaubild und einer Auswertung:</strong> zu merken, wenn die Daten
+    selbst nicht stimmen.
+  </p>
+</section>
+
 <h2>Das eigene Berufsfeld</h2>
 <p class="unter">Marketing, Content und Medien – die Berufsgruppen, in denen ich
 mich bewerbe. Sortiert nach Zahl der Arbeitslosen. Gefärbt ist die letzte
@@ -553,8 +574,8 @@ const de = (v, k) => v.toLocaleString('de-DE',
   {minimumFractionDigits: k, maximumFractionDigits: k});
 
 const tooltipStil = {
-  backgroundColor: F('--ink'), titleColor: F('--surface'),
-  bodyColor: F('--surface'), padding: 10, boxWidth: 8, boxHeight: 8,
+  backgroundColor: F('--navy'), titleColor: '#ffffff',
+  bodyColor: '#ffffff', padding: 10, boxWidth: 8, boxHeight: 8,
   cornerRadius: 6, usePointStyle: true
 };
 const basis = {
@@ -579,17 +600,17 @@ new Chart(document.getElementById('verlauf'), {
   options: Object.assign({}, basis, {
     scales: {
       y: { title: { display: true, text: 'Arbeitslose (Personen)',
-                    color: F('--ink-2'), font: { size: 12, weight: '600' } },
+                    color: F('--ink'), font: { size: 12, weight: '600' } },
            ticks: { color: F('--muted'), callback: v => de(v, 0) },
            grid: { color: F('--grid'), drawTicks: false },
            border: { color: F('--achse') } },
       x: { title: { display: true, text: 'Monat',
-                    color: F('--ink-2'), font: { size: 12, weight: '600' } },
+                    color: F('--ink'), font: { size: 12, weight: '600' } },
            ticks: { color: F('--muted'), maxTicksLimit: 11, autoSkip: true },
            grid: { display: false }, border: { color: F('--achse') } }
     },
     plugins: {
-      legend: { labels: { color: F('--ink-2'), boxWidth: 22, boxHeight: 2,
+      legend: { labels: { color: F('--ink'), boxWidth: 22, boxHeight: 2,
                           usePointStyle: false } },
       tooltip: Object.assign({}, tooltipStil, {
         callbacks: { label: c => c.dataset.label + ': ' + de(c.parsed.y, 0) }
@@ -612,7 +633,7 @@ new Chart(document.getElementById('andrang'), {
         if (!bereich) return 'transparent';
         const g = ctx.chart.ctx.createLinearGradient(0, bereich.top,
                                                      0, bereich.bottom);
-        g.addColorStop(0, F('--serie') + '2e');
+        g.addColorStop(0, F('--serie') + '26');
         g.addColorStop(1, F('--serie') + '00');
         return g;
       }
@@ -622,12 +643,12 @@ new Chart(document.getElementById('andrang'), {
     scales: {
       y: { beginAtZero: true,
            title: { display: true, text: 'Arbeitslose je gemeldete Stelle',
-                    color: F('--ink-2'), font: { size: 12, weight: '600' } },
+                    color: F('--ink'), font: { size: 12, weight: '600' } },
            ticks: { color: F('--muted'), callback: v => de(v, 0) },
            grid: { color: F('--grid'), drawTicks: false },
            border: { color: F('--achse') } },
       x: { title: { display: true, text: 'Monat',
-                    color: F('--ink-2'), font: { size: 12, weight: '600' } },
+                    color: F('--ink'), font: { size: 12, weight: '600' } },
            ticks: { color: F('--muted'), maxTicksLimit: 13, autoSkip: true },
            grid: { display: false }, border: { color: F('--achse') } }
     },
