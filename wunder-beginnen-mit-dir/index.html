@@ -1,0 +1,20 @@
+<!doctype html><html lang="uk"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Wunder beginnen mit dir — Musikfilm</title>
+<meta name="description" content="Дива починаються з тебе — музична історія з анімацією та німецьким текстом для підспівування.">
+<meta name="theme-color" content="#070b13">
+<link rel="canonical" href="https://kolosovskyi.de/wunder-beginnen-mit-dir/">
+<link rel="icon" href="/assets/favicon.ico">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Wunder beginnen mit dir">
+<meta property="og:description" content="Дива починаються з тебе. Світло пам’ятає твої руки.">
+<meta property="og:url" content="https://kolosovskyi.de/wunder-beginnen-mit-dir/">
+<meta property="og:image" content="https://kolosovskyi.de/wunder-beginnen-mit-dir/couple.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="clip.css">
+<main><nav style="margin-bottom:20px"><a href="/">← На головну</a></nav><header><div><div class="eyebrow">МУЗИЧНА ІСТОРІЯ • 03:15</div><h1>Wunder beginnen mit dir</h1></div><small>Світло пам’ятає твої руки</small></header>
+<div class="stage" id="stage"><canvas id="film" width="1920" height="1080" aria-label="Магічний анімований кліп із текстом пісні"></canvas></div>
+<input id="seek" aria-label="Позиція у пісні" type="range" min="0" max="195.38" step="0.05" value="0">
+<div class="bar"><button class="primary" id="play">▶ Відтворити</button><button id="restart">Спочатку</button><span class="time" id="time">0:00 / 3:15</span><button id="full">На весь екран</button><button id="textToggle">Текст: увімкнено</button><label>Гучність</label><input id="volume" aria-label="Гучність" type="range" min="0" max="1" step=".01" value=".85"><button id="export">Зберегти відео</button></div>
+<p id="status" role="status"></p><div class="note">Попередня синхронізація: час рядків оцінено за активністю вокальної доріжки. Підсвічування всередині рядка — плавна приблизна підказка.</div>
+<details id="settings"><summary>Налаштувати час тексту</summary><p>Для точної прив’язки натисни «Розмічати з початку». Коли починається наступний рядок, натискай <kbd>Enter</kbd> або кнопку «Цей рядок починається зараз». Часи можна виправити окремо. Збереження працює в цьому браузері; JSON дозволяє перенести розмітку.</p><div class="bar"><button id="tapStart">Розмічати з початку</button><button id="tap">Цей рядок починається зараз</button><button id="saveTiming">Завантажити розмітку</button><label class="import">Відкрити розмітку<input id="importTiming" type="file" accept="application/json,.json" hidden></label><button id="resetTiming">Початкова розмітка</button></div><p id="nextCue"></p><div id="editor"></div></details><footer style="margin-top:32px;padding-top:18px;border-top:1px solid #383641;display:flex;gap:24px"><a href="/impressum.html">Impressum</a><a href="/datenschutz.html">Datenschutz</a></footer></main>
+<audio id="audio" preload="metadata" src="song.mp3"></audio>
+<script src="clip.js"></script></html>
